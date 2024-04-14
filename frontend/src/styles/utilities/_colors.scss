@@ -1,0 +1,17 @@
+@use '../settings' as *;
+
+.u-bg-primary {
+  background-color: $bleu-light-500;
+}
+
+.u-primary-text {
+  color: $white;
+}
+
+.u-secondary-text {
+  color: $white;
+}
+
+.u-medium-grey-text {
+  color: $white;
+}

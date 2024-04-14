@@ -1,0 +1,15 @@
+@use '../settings/variables' as *;
+
+$light-theme: (
+        background: $white,
+        body-color: $body-color,
+        sidebar-color: $sidebar-color,
+        text-color: $black,
+);
+
+$dark-theme: (
+        background: $bleu-500,
+        body-color: $bleu-600,
+        sidebar-color: $bleu-700,
+        text-color: $white,
+);
