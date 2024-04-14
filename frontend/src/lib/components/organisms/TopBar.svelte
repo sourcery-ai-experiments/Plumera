@@ -1,8 +1,12 @@
-<script>
+<script lang="ts">
 	import ThemeSwitcher from '$lib/components/atoms/ThemeSwitcher.svelte';
-	import Button from '$lib/components/atoms/Button.svelte';
+	import { Button } from '$lib/components/ui/button/index.js';
+
+	import ButtonUi from '$lib/components/atoms/ButtonUi.svelte';
 
 	import { FilePenLine } from 'lucide-svelte';
+
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 
 </script>
 
@@ -13,9 +17,9 @@
 
 	<div class="c-topbar__container">
 		<div class="c-topbar__container__left">
-			<Button label="Create invoice">
+			<ButtonUi label="Create invoice">
 				<FilePenLine class="w-5 h-5" />
-			</Button>
+			</ButtonUi>
 		</div>
 	</div>
 	<div class="c-topbar__container__right">
@@ -23,7 +27,19 @@
 			<div class="c-profile-avatar">
 				<div class="flex justify-center items-center text-black gap-2">
 					<ThemeSwitcher />
-					<p>Déconnexion</p>
+					<DropdownMenu.Root>
+						<DropdownMenu.Trigger asChild let:builder>
+							<Button builders={[builder]} variant="outlet" class="flex items-center gap-2 bg-transparent">
+								<img src="https://avatars.githubusercontent.com/u/1402241?v=4" class="w-8 h-8 rounded-full"
+										 alt="avatar" />
+							</Button>
+						</DropdownMenu.Trigger>
+						<DropdownMenu.Content class="w-56">
+							<DropdownMenu.Label>Profil</DropdownMenu.Label>
+							<DropdownMenu.Separator />
+							<DropdownMenu.Item>Déconnexion</DropdownMenu.Item>
+						</DropdownMenu.Content>
+					</DropdownMenu.Root>
 				</div>
 			</div>
 		</div>
