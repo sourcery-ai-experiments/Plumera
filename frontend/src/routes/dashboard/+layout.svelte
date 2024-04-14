@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-    <title>Invoicer.ia | Dashboard</title>
+    <title>Ava | Dashboard</title>
     <meta name="description" content="Invoicer.ia est un outil de facturation en ligne pour les auto-entrepreneurs.">
     <meta name="keywords" content="facturation, auto-entrepreneur, freelance, facture, devis, comptabilité">
     <meta name="author" content="Invoicer.ia">

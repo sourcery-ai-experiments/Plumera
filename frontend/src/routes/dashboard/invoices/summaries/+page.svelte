@@ -1,5 +1,10 @@
-<script>
-	import { CirclePlus } from 'lucide-svelte';
+<script lang="ts">
+	import { CirclePlus, FileImage } from 'lucide-svelte';
+
+	import { Checkbox } from '$lib/components/ui/checkbox/index.js';
+	import Label from '$lib/components/ui/label/label.svelte';
+
+	let checked = false;
 </script>
 
 <section class="px-6 py-6">
@@ -8,7 +13,7 @@
 			<h5 class="text-black text-lg font-semibold">Invoices</h5>
 			<a href="/" class=" flex justify-center gap-1 items-center text-black text-sm">
 				<CirclePlus class="w-3 h-3" />
-				Create new invoice
+				Create
 			</a>
 		</div>
 		<div class="relative text-gray-600">
@@ -24,4 +29,51 @@
 			</button>
 		</div>
 	</header>
+
+	<div class="mt-6">
+		<table class="table w-full text-black border-separate space-y-6 text-sm">
+			<thead>
+			<tr>
+				<th class="flex items-center gap-2 p-3 text-center">
+					<Checkbox id="default-checkbox" bind:checked />
+					<Label
+						for="default-checkbox"
+						class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+					>
+						Select All
+					</Label>
+				</th>
+				<th class="p-3 text-center">Name</th>
+				<th class="p-3 text-center">Price</th>
+				<th class="p-3 text-center">Client</th>
+				<th class="p-3 text-center">Status</th>
+				<th class="p-3 text-center">Date</th>
+				<th class="p-3 text-center">Action</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr class="bg-[#e7effc]">
+				<td class="flex items-center gap-2 p-3 text-center">
+					<Checkbox id="default-checkbox" bind:checked />
+					<Label
+						for="default-checkbox"
+						class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+					>
+						<FileImage class="w-8 h-8" />
+					</Label>
+				</td>
+				<td class="p-3 text-center">Design</td>
+				<td class="p-3 text-center">$100</td>
+				<td class="p-3 text-center">John Doe</td>
+				<td class="p-3 text-center">
+					<span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Paid</span>
+				</td>
+				<td class="p-3 text-center">12/12/2021</td>
+				<td class="p-3 text-center">
+					<a href="/" class="text-indigo-600 hover:text-indigo-900">...</a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
 </section>
