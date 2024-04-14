@@ -15,8 +15,8 @@
 
 <div class="c-login">
     <div>
-        <h4>Bienvenue !</h4>
-        <p>Connectez-vous pour accéder à votre compte.</p>
+        <h4 class="text-black">Bienvenue !</h4>
+        <p class="text-black">Connectez-vous pour accéder à votre compte.</p>
 
         <form on:submit={handlerSubmit}>
             <div class="c-input">
