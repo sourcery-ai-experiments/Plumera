@@ -25,18 +25,13 @@
 		Dashboard
 	</a>
 
-	<a href="/dashboard/customers"
-		 class={$currentPath === '/dashboard/customers' ? 'active' : ''}
-	>
-		<Users />
-		Clients
-	</a>
 	<button on:click={toggle}
 					class={$currentPath === '/dashboard/invoices' ? 'active' : ''}
 	>
 		<Files />
 		Invoices
 	</button>
+
 	{#if !$hide}
 		<div class="c-sidebar__sub-menu c-sidebar__sub-menu--link active">
 			<a href="/dashboard/invoices/add"
@@ -53,4 +48,11 @@
 			</a>
 		</div>
 	{/if}
+
+	<a href="/dashboard/customers"
+		 class={$currentPath === '/dashboard/customers' ? 'active' : ''}
+	>
+		<Users />
+		Clients
+	</a>
 </section>
