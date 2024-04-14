@@ -1,7 +1,7 @@
 <script>
     import '../../styles/_main.scss';
-    import SideBar from "../../components/organisms/SideBar.svelte";
-    import TopBar from "../../components/organisms/TopBar.svelte";
+    import SideBar from "$lib/components/organisms/SideBar.svelte";
+    import TopBar from "$lib/components/organisms/TopBar.svelte";
 </script>
 
 <svelte:head>

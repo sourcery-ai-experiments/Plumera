@@ -1,6 +1,6 @@
 <script>
-	import ThemeSwitcher from '../atoms/ThemeSwitcher.svelte';
-	import Button from '../atoms/Button.svelte';
+	import ThemeSwitcher from '$lib/components/atoms/ThemeSwitcher.svelte';
+	import Button from '$lib/components/atoms/Button.svelte';
 
 	import { FilePenLine } from 'lucide-svelte';
 

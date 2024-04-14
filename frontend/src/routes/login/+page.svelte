@@ -1,5 +1,5 @@
 <script>
-    import Button from '../../components/atoms/Button.svelte';
+    import Button from '$lib/components/atoms/Button.svelte';
 
     let email = '';
 

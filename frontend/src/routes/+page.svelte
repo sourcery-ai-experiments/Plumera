@@ -1,5 +1,5 @@
 <script>
-    import ThemeSwitcher from "../components/atoms/ThemeSwitcher.svelte";
+    import ThemeSwitcher from "$lib/components/atoms/ThemeSwitcher.svelte";
 </script>
 
 <h1>page product</h1>

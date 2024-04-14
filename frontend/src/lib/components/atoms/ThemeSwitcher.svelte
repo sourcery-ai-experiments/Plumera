@@ -1,5 +1,5 @@
 <script>
-    import '../../styles/_main.scss';
+    import '../../../styles/_main.scss';
     import {onMount} from 'svelte';
     import {Moon, Sun} from "lucide-svelte";
 
