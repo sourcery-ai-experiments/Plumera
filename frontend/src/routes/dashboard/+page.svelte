@@ -6,9 +6,5 @@
     <meta name="description" content="Invoicer.ia est un outil de facturation en ligne pour les auto-entrepreneurs.">
 </svelte:head>
 
-<h1>page product</h1>
-
-<a href="login">login</a>
-
 <style>
 </style>

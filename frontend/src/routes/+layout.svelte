@@ -1,17 +1,7 @@
 <script>
-	import '../styles/_main.scss';
-	import ThemeSwitcher from '../components/atoms/ThemeSwitcher.svelte';
+    import '../styles/_main.scss';
 </script>
 
-<section>
-	<div>
-		Header
-		<ThemeSwitcher />
-	</div>
-
-	<main>
-		<slot />
-	</main>
-</section>
-
-<style></style>
+<main>
+    <slot/>
+</main>
