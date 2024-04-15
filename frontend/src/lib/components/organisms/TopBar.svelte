@@ -14,8 +14,6 @@
 <nav class="c-topbar">
 	<div class="c-topbar__logo flex justify-between items-center gap-6">
 		<h2 class="text-black text-xl">Hi Francis</h2>
-
-		<CommandK />
 	</div>
 
 	<div class="c-topbar__container">
@@ -27,11 +25,15 @@
 			</a>
 		</div>
 	</div>
+
 	<div class="c-topbar__container__right">
 		<div class="c-topbar__container__right__item">
 			<div class="c-profile-avatar">
-				<div class="flex justify-center items-center text-black gap-2">
+				<div class="flex justify-center items-center text-black gap-6">
+					<CommandK />
+
 					<ThemeSwitcher />
+
 					<DropdownMenu.Root>
 						<DropdownMenu.Trigger asChild let:builder>
 							<Button builders={[builder]} variant="outlet" class="flex items-center gap-2 bg-transparent">
