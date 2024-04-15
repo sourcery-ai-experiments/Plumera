@@ -28,8 +28,6 @@
 		isEditable[index] = !isEditable[index];
 	};
 
-	console.log('lineItems:', lineItems);
-
 	const saveInvoice = (index) => {
 		console.log('saveInvoice function called', index);
 		lineItems = lineItems.map((lineItem, i) => {
@@ -90,7 +88,7 @@
 				</div>
 			</header>
 
-			<div class="bg-[#f2f5fd] p-6 mt-6 rounded-xl overflow-auto h-[835px]">
+			<div class="bg-[#f2f5fd] p-6 mt-6 rounded-xl overflow-auto h-[80vh]">
 				<div class="flex flex-col items-center">
 					<div class="flex justify-between items-center w-full mb-6">
 						<p class="flex justify-center items-center gap-2">
