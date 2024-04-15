@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
 	import { FilePlus, Files, FileSearch2, Home, Users } from 'lucide-svelte';
 	import { writable } from 'svelte/store';
