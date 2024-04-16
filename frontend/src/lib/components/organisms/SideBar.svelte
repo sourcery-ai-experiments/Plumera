@@ -16,42 +16,44 @@
 	function toggle() {
 		hide.update(value => !value);
 	}
+
+	function updateActive(path) {
+		if ($hide || path !== $currentPath) {
+			hide.set(true);
+		}
+		currentPath.set(path);
+	}
 </script>
 
 <section class="c-sidebar">
-	<a href="/dashboard" class={$currentPath === '/dashboard' ? 'active' : ''}
-	>
+	<a href="/dashboard" class:active={$currentPath === '/dashboard'} on:click={() => updateActive('/dashboard')}>
 		<Home />
 		Dashboard
 	</a>
 
 	<button on:click={toggle}
-					class={$currentPath === '/dashboard/invoices' ? 'active' : ''}
-	>
+					class:active={$currentPath === '/dashboard/invoices/add' || $currentPath === '/dashboard/invoices/summaries'}>
 		<Files />
 		Invoices
 	</button>
 
 	{#if !$hide}
-		<div class="c-sidebar__sub-menu c-sidebar__sub-menu--link active">
-			<a href="/dashboard/invoices/add"
-				 class={$currentPath === '/dashboard/invoices/add' ? 'active' : ''}
-			>
+		<div class="c-sidebar__sub-menu c-sidebar__sub-menu--link active" role="menu">
+			<a href="/dashboard/invoices/add" class:active={$currentPath === '/dashboard/invoices/add'}
+				 on:click={() => updateActive('/dashboard/invoices/add')}>
 				<FilePlus />
-				créer une facture
+				Créer une facture
 			</a>
-			<a href="/dashboard/invoices/summaries"
-				 class={$currentPath === '/dashboard/invoices/summaries' ? 'active' : ''}
-			>
+			<a href="/dashboard/invoices/summaries" class:active={$currentPath === '/dashboard/invoices/summaries'}
+				 on:click={() => updateActive('/dashboard/invoices/summaries')}>
 				<FileSearch2 />
 				Liste des factures
 			</a>
 		</div>
 	{/if}
 
-	<a href="/dashboard/customers"
-		 class={$currentPath === '/dashboard/customers' ? 'active' : ''}
-	>
+	<a href="/dashboard/customers" class:active={$currentPath === '/dashboard/customers'}
+		 on:click={() => updateActive('/dashboard/customers')}>
 		<Users />
 		Clients
 	</a>
