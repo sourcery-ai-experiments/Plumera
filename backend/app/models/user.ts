@@ -2,8 +2,12 @@ import { DateTime } from 'luxon'
 import hash from '@adonisjs/core/services/hash'
 import jwt from 'jsonwebtoken'
 import { compose, Secret } from '@adonisjs/core/helpers'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany, hasOne } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
+import type { HasMany, HasOne } from '@adonisjs/lucid/types/relations'
+import BankDetail from '#models/bank_detail'
+import PublicBusinessData from '#models/public_business_data'
+import Invoice from '#models/invoice'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -49,6 +53,15 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @column()
   declare google_id: string | null
+
+  @hasOne(() => BankDetail)
+  declare bankDetail: HasOne<typeof BankDetail>
+
+  @hasOne(() => PublicBusinessData)
+  declare publicBusinessData: HasOne<typeof PublicBusinessData>
+
+  @hasMany(() => Invoice)
+  declare invoices: HasMany<typeof Invoice>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

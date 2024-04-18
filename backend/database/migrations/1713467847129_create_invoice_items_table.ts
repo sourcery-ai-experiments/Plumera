@@ -11,7 +11,7 @@ export default class InvoiceItemsSchema extends BaseSchema {
         .uuid('product_service_id')
         .unsigned()
         .references('id')
-        .inTable('products_services')
+        .inTable('product_services')
         .onDelete('CASCADE')
       table.integer('quantity').notNullable()
       table.decimal('line_total', 12, 2).notNullable()

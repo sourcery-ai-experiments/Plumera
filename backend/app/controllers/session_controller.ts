@@ -1,6 +1,6 @@
 import { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
-import { createUserValidator } from '#validators/user'
+import { signinValidator } from '#validators/user'
 import mail from '@adonisjs/mail/services/main'
 import hash from '@adonisjs/core/services/hash'
 
@@ -8,7 +8,7 @@ export default class SessionController {
   async requestLoginLink({ request, response }: HttpContext) {
     const data = request.all()
 
-    const validator = await createUserValidator.validate(data)
+    const validator = await signinValidator.validate(data)
 
     if (!validator) {
       return response.status(422).json({ message: 'Veuillez fournir une adresse e-mail valide.' })
