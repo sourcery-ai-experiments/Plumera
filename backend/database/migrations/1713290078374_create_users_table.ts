@@ -16,11 +16,16 @@ export default class extends BaseSchema {
       table.string('access_token').nullable()
       table.string('refresh_token').nullable()
       table.string('google_id').nullable()
+      table.string('country')
+      table.string('business_form')
+      table.string('siren_number').unique()
+
       table.string('magic_link_token_expires_at', 255).nullable()
       table.string('subscription_active', 255).nullable()
 
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()
+      table.boolean('active')
     })
   }
 
