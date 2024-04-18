@@ -1,4 +1,4 @@
-FROM node:20.11.1 AS builder
+FROM node:21-alpine AS builder
 
 RUN npm install -g --force yarn
 

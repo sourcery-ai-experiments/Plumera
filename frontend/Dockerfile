@@ -1,4 +1,4 @@
-FROM node:21.4.0 AS builder
+FROM node:21-alpine AS builder
 
 WORKDIR /app
 
@@ -10,6 +10,6 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 5173
+EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD [ "node", "build" ]

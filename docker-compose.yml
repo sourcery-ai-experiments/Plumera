@@ -8,8 +8,6 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./frontend:/app
-      - /app/node_modules
-      - /app/.svelte
     ports:
       - "5173:5173"
 
