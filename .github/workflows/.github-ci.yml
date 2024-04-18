@@ -1,50 +1,68 @@
-stages:
-  - build
-  - test
+name: CI
 
-pre-commit-check:
-  stage: build
-  tags:
-    - 'Docker'
-  image: 'python:3.11'
-  before_script:
-    - pip install pre-commit
-    - pre-commit install
-  script:
-    - pre-commit run --all-files --show-diff-on-failure
+on:
+  push:
+    branches:
+      - '*'
 
-backend-compile:
-  stage: build
-  tags:
-    - 'Docker'
-  image: 'node:21-alpine3.18'
-  before_script:
-    - cd backend
-    - yarn --version
-    - yarn install --frozen-lockfile
-  script:
-    - yarn tsc
+jobs:
+  pre-commit-check:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.11
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install pre-commit
+        run: pip install pre-commit
+      - name: Run pre-commit checks
+        run: pre-commit run --all-files --show-diff-on-failure
+        working-directory: .venv
 
-frontend-compile:
-  stage: build
-  tags:
-    - 'Docker'
-  image: 'node:21-alpine3.18'
-  before_script:
-    - cd frontend
-    - yarn --version
-    - yarn install --frozen-lockfile
-  script:
-    - yarn tsc
+  backend-compile:
+    runs-on: ubuntu-latest
+    container:
+      image: node:21-alpine3.18
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          yarn install
+        working-directory: backend  
+      - name: Compile TypeScript
+        run: |
+          yarn tsc
+        working-directory: backend  
 
-frontend-test:
-  stage: test
-  tags:
-    - 'Docker'
-  image: 'node:21-alpine3.18'
-  before_script:
-    - cd frontend
-    - yarn --version
-    - yarn install --frozen-lockfile
-  script:
-    - yarn test
+  frontend-compile:
+    runs-on: ubuntu-latest
+    container:
+      image: node:21-alpine3.18
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          yarn install
+        working-directory: frontend  
+      - name: Compile TypeScript
+        run: |
+          yarn tsc
+        working-directory: frontend  
+
+  frontend-test:
+    runs-on: ubuntu-latest
+    container:
+      image: node:21-alpine3.18
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          yarn install
+        working-directory: frontend  
+      - name: Run tests
+        run: |
+          yarn test
+        working-directory: frontend  
