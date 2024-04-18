@@ -11,6 +11,10 @@ jobs:
     container:
       image: python:3.11
     steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install pre-commit
@@ -23,12 +27,16 @@ jobs:
     container:
       image: node:21-alpine3.18
     steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install dependencies
         run: |
           yarn install
-        working-directory: backend  
+        working-directory: backend
       - name: Compile TypeScript
         run: |
           yarn tsc
@@ -38,6 +46,10 @@ jobs:
     container:
       image: node:21-alpine3.18
     steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install dependencies
@@ -52,6 +64,10 @@ jobs:
     container:
       image: node:21-alpine3.18
     steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install dependencies
