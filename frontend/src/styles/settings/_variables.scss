@@ -27,20 +27,6 @@ $bleu-light-700: #342db5;
 $bleu-light-800: #28238c;
 $bleu-light-900: #1f1a6b;
 
-$light-theme: (
-        background: $white,
-        body-color: $body-color,
-        sidebar-color: $sidebar-color,
-        text-color: $black,
-);
-
-$dark-theme: (
-        background: $bleu-500,
-        body-color: $bleu-600,
-        sidebar-color: $bleu-700,
-        text-color: $white,
-);
-
 $xw-400: 400;
 $xw-500: 500;
 $xw-600: 600;
@@ -71,3 +57,17 @@ $mobile: 480px;
 
 $primary-fonts: "Montserrat", sans-serif;
 $secondary-fonts: "Poppins", sans-serif;
+
+$light-theme: (
+  background: $white,
+  body-color: $body-color,
+  sidebar-color: $sidebar-color,
+  text-color: $black,
+);
+
+$dark-theme: (
+  background: $bleu-500,
+  body-color: $bleu-600,
+  sidebar-color: $bleu-700,
+  text-color: $white,
+);

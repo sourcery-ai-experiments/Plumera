@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { FilePlus, Files, FileSearch2, Home, Users } from 'lucide-svelte';
+	import { CalendarDays, FilePlus, Files, FileSearch2, Home, Users } from 'lucide-svelte';
 	import { writable } from 'svelte/store';
 
 	let hide = writable(true);
@@ -26,6 +26,13 @@
 </script>
 
 <section class="c-sidebar">
+	<div class="logo">
+		<img
+			src="/logo/logo-white.png"
+			alt="logo skipperndt"
+		/>
+	</div>
+
 	<a href="/dashboard" class:active={$currentPath === '/dashboard'} on:click={() => updateActive('/dashboard')}>
 		<Home />
 		Dashboard
@@ -51,6 +58,12 @@
 			</a>
 		</div>
 	{/if}
+
+	<a href="/dashboard/calendar" class:active={$currentPath === '/dashboard/calendar'}
+		 on:click={() => updateActive('/dashboard/calendar')}>
+		<CalendarDays />
+		Calendar
+	</a>
 
 	<a href="/dashboard/customers" class:active={$currentPath === '/dashboard/customers'}
 		 on:click={() => updateActive('/dashboard/customers')}>

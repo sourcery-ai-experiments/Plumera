@@ -1,0 +1,44 @@
+@use '../../settings/variables' as *;
+
+.c-calendar {
+  color: black;
+  padding: 24px 32px;
+
+  > .fc-today-button,
+  .fc-prev-button,
+  .fc-next-button {
+    border: solid 0.5px $bleu-light-500;
+    background-color: white;
+    color: $bleu-light-500;
+
+    &:hover {
+      background-color: $bleu-light-500;
+      color: white;
+    }
+  }
+
+  > .fc-today-button,
+  .fc-prev-button,
+  .fc-next-button,
+  .fc-button,
+  .fc-button-primary {
+    border: solid 0.5px $bleu-light-500;
+    background-color: white;
+    color: $bleu-light-500;
+
+    &:disabled {
+      border: solid 0.5px $bleu-light-500;
+      background-color: white;
+      color: $bleu-light-500;
+    }
+
+    &:hover {
+      background-color: $bleu-light-500;
+      color: white;
+    }
+  }
+
+  .fc .fc-daygrid-day.fc-day-today {
+    background-color: $bleu-light-500;
+  }
+}
