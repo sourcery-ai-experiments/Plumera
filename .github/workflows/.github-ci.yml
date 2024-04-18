@@ -17,6 +17,7 @@ jobs:
         run: pip install pre-commit
       - name: Run pre-commit checks
         run: pre-commit run --all-files --show-diff-on-failure
+        working-directory: backend  # Replace 'backend' with your project directory name
 
   backend-compile:
     runs-on: ubuntu-latest
@@ -27,12 +28,12 @@ jobs:
         uses: actions/checkout@v2
       - name: Install dependencies
         run: |
-          cd backend
           yarn install
+        working-directory: backend  # Replace 'backend' with your project directory name
       - name: Compile TypeScript
         run: |
-          cd backend
           yarn tsc
+        working-directory: backend  # Replace 'backend' with your project directory name
 
   frontend-compile:
     runs-on: ubuntu-latest
@@ -43,12 +44,12 @@ jobs:
         uses: actions/checkout@v2
       - name: Install dependencies
         run: |
-          cd frontend
           yarn install
+        working-directory: frontend  # Replace 'frontend' with your project directory name
       - name: Compile TypeScript
         run: |
-          cd frontend
           yarn tsc
+        working-directory: frontend  # Replace 'frontend' with your project directory name
 
   frontend-test:
     runs-on: ubuntu-latest
@@ -59,9 +60,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Install dependencies
         run: |
-          cd frontend
           yarn install
+        working-directory: frontend  # Replace 'frontend' with your project directory name
       - name: Run tests
         run: |
-          cd frontend
           yarn test
+        working-directory: frontend  # Replace 'frontend' with your project directory name
