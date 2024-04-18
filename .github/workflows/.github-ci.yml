@@ -1,0 +1,50 @@
+stages:
+  - build
+  - test
+
+pre-commit-check:
+  stage: build
+  tags:
+    - 'Docker'
+  image: 'python:3.11'
+  before_script:
+    - pip install pre-commit
+    - pre-commit install
+  script:
+    - pre-commit run --all-files --show-diff-on-failure
+
+backend-compile:
+  stage: build
+  tags:
+    - 'Docker'
+  image: 'node:21-alpine3.18'
+  before_script:
+    - cd backend
+    - yarn --version
+    - yarn install --frozen-lockfile
+  script:
+    - yarn tsc
+
+frontend-compile:
+  stage: build
+  tags:
+    - 'Docker'
+  image: 'node:21-alpine3.18'
+  before_script:
+    - cd frontend
+    - yarn --version
+    - yarn install --frozen-lockfile
+  script:
+    - yarn tsc
+
+frontend-test:
+  stage: test
+  tags:
+    - 'Docker'
+  image: 'node:21-alpine3.18'
+  before_script:
+    - cd frontend
+    - yarn --version
+    - yarn install --frozen-lockfile
+  script:
+    - yarn test
