@@ -1,20 +1,21 @@
-# Utilisation de l'image Node.js
-FROM node:21-alpine3.18
+FROM node:20.11.1 AS builder
 
-# Définir le répertoire de travail
-WORKDIR /usr/src/app
+RUN npm install -g --force yarn
 
-# Copier les fichiers de dépendances
-COPY package*.json yarn.lock ./
+WORKDIR /app
 
-# Installer les dépendances
+COPY package.json yarn.lock ./
+
 RUN yarn install
 
-# Copier le reste des fichiers de l'application
 COPY . .
 
-# Exposer le port utilisé par AdonisJS
+RUN yarn build
+
 EXPOSE 3333
 
-# Commande pour lancer l'application en mode développement
-CMD ["yarn", "dev"]
+WORKDIR /app/build
+
+RUN yarn install
+
+CMD ["node", "bin/server.js"]

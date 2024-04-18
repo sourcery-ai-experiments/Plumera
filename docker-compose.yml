@@ -4,8 +4,8 @@ services:
   frontend:
     container_name: frontend
     build:
-      context: frontend
-      dockerfile: Dockerfile
+      context: ./frontend
+      dockerfile: Dockerfile.dev
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -16,8 +16,8 @@ services:
   backend:
     container_name: backend
     build:
-      context: backend
-      dockerfile: Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile.dev
     volumes:
       - ./backend:/app
     ports:
@@ -30,9 +30,14 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: FRONTEND
-      POSTGRES_PASSWORD: FRONTEND
-      POSTGRES_DB: FRONTEND
+      POSTGRES_USER: avaa
+      POSTGRES_PASSWORD: avaa
+      POSTGRES_DB: avaa
+
+  redis:
+    image: redis:6.2
+    ports:
+      - "6379:6379"
 
   minio:
     image: minio/minio:latest
