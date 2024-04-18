@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd backend
-          yarn install --frozen-lockfile
+          yarn install
       - name: Compile TypeScript
         run: |
           cd backend
@@ -44,7 +44,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd frontend
-          yarn install --frozen-lockfile
+          yarn install
       - name: Compile TypeScript
         run: |
           cd frontend
@@ -60,7 +60,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd frontend
-          yarn install --frozen-lockfile
+          yarn install
       - name: Run tests
         run: |
           cd frontend
