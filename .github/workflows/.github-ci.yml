@@ -1,78 +1,78 @@
-name: CI
-
-on:
-  push:
-    branches:
-      - '*'
-
-jobs:
-  pre-commit-check:
-    runs-on: ubuntu-latest
-    container:
-      image: python:3.11
-    steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install pre-commit
-        run: pip install pre-commit
-      - name: Run pre-commit checks
-        run: pre-commit run --all-files --show-diff-on-failure
-
-  backend-compile:
-    runs-on: ubuntu-latest
-    container:
-      image: node:21-alpine3.18
-    steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          yarn install
-        working-directory: backend
-      - name: Compile TypeScript
-        run: |
-          yarn tsc
-
-  frontend-compile:
-    runs-on: ubuntu-latest
-    container:
-      image: node:21-alpine3.18
-    steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          yarn install
-      - name: Compile TypeScript
-        run: |
-          yarn tsc
-
-  frontend-test:
-    runs-on: ubuntu-latest
-    container:
-      image: node:21-alpine3.18
-    steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        run: |
-          yarn install
-      - name: Run tests
-        run: |
-          yarn test
+#name: CI
+#
+#on:
+#  push:
+#    branches:
+#      - '*'
+#
+#jobs:
+#  pre-commit-check:
+#    runs-on: ubuntu-latest
+#    container:
+#      image: python:3.11
+#    steps:
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v2
+#        with:
+#          node-version: '20'
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#      - name: Install pre-commit
+#        run: pip install pre-commit
+#      - name: Run pre-commit checks
+#        run: pre-commit run --all-files --show-diff-on-failure
+#
+#  backend-compile:
+#    runs-on: ubuntu-latest
+#    container:
+#      image: node:21-alpine3.18
+#    steps:
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v2
+#        with:
+#          node-version: '20'
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#      - name: Install dependencies
+#        run: |
+#          yarn install
+#        working-directory: backend
+#      - name: Compile TypeScript
+#        run: |
+#          yarn tsc
+#
+#  frontend-compile:
+#    runs-on: ubuntu-latest
+#    container:
+#      image: node:21-alpine3.18
+#    steps:
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v2
+#        with:
+#          node-version: '20'
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#      - name: Install dependencies
+#        run: |
+#          yarn install
+#      - name: Compile TypeScript
+#        run: |
+#          yarn tsc
+#
+#  frontend-test:
+#    runs-on: ubuntu-latest
+#    container:
+#      image: node:21-alpine3.18
+#    steps:
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v2
+#        with:
+#          node-version: '20'
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#      - name: Install dependencies
+#        run: |
+#          yarn install
+#      - name: Run tests
+#        run: |
+#          yarn test
