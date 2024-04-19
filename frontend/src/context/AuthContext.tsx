@@ -14,6 +14,8 @@ export const useAuth = () => useContext(AuthContext)
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<any>(null)
+  const [token, setToken] = useState<any>(null)
+  const [loadingToken, setLoadingToken] = useState(true)
 
   const isAuthenticated = (): boolean => {
     const token: CookieValueTypes = getCookie('')

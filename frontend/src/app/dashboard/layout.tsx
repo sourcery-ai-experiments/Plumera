@@ -3,9 +3,10 @@
 import { ReactNode, Suspense } from 'react'
 import SideBar from '@/components/organisms/sidebar/sideBar'
 import TopBar from '@/components/organisms/topbar/topBar'
+import AuthContextProvider from '@/context/AuthContext'
 
 const Layout = ({ children }: { children: ReactNode }) => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <AuthContextProvider>
     <section className="c-layout-dashboard">
       <SideBar />
       <div className="c-layout-dashboard__container">
@@ -13,7 +14,7 @@ const Layout = ({ children }: { children: ReactNode }) => (
         {children}
       </div>
     </section>
-  </Suspense>
+  </AuthContextProvider>
 )
 
 export default Layout

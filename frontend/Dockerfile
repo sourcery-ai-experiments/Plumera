@@ -1,15 +1,15 @@
-FROM node:21-alpine3.18
+FROM node:21.4.0 AS builder
 
 WORKDIR /app
 
-COPY package.json yarn.lock /app/
+COPY package*.json ./
 
-RUN yarn install
+RUN npm install
 
-COPY . /app/
+COPY . .
 
-# Exposer le port 3000 (redundant, you can remove this line)
+RUN npm run build
+
 EXPOSE 3000
 
-# Lancer l'application en mode développement
-CMD ["yarn", "dev"]
+CMD ["npm", "start"]
