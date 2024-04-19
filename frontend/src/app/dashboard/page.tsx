@@ -1,14 +1,6 @@
-import Link from 'next/link'
-import {
-  Activity,
-  ArrowUpRight,
-  CreditCard,
-  DollarSign,
-  Users,
-} from 'lucide-react'
+import { Activity, CreditCard, DollarSign, Users } from 'lucide-react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -27,7 +19,7 @@ import {
 import { Badge } from '@/components/ui/badge'
 
 const Page = () => (
-  <div className="flex min-h-screen w-full flex-col">
+  <div className="flex">
     <div className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
         <Card x-chunk="dashboard-01-chunk-0">
@@ -112,9 +104,7 @@ const Page = () => (
                   </TableCell>
                   <TableCell className="hidden xl:table-column">Sale</TableCell>
                   <TableCell className="hidden xl:table-column">
-                    <Badge className="text-xs" variant="outline">
-                      Approved
-                    </Badge>
+                    <Badge className="text-xs">Approved</Badge>
                   </TableCell>
                   <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
                     2023-06-23
@@ -132,9 +122,7 @@ const Page = () => (
                     Refund
                   </TableCell>
                   <TableCell className="hidden xl:table-column">
-                    <Badge className="text-xs" variant="outline">
-                      Declined
-                    </Badge>
+                    <Badge className="text-xs">Declined</Badge>
                   </TableCell>
                   <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
                     2023-06-24
@@ -152,9 +140,7 @@ const Page = () => (
                     Subscription
                   </TableCell>
                   <TableCell className="hidden xl:table-column">
-                    <Badge className="text-xs" variant="outline">
-                      Approved
-                    </Badge>
+                    <Badge className="text-xs">Approved</Badge>
                   </TableCell>
                   <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
                     2023-06-25
@@ -170,9 +156,7 @@ const Page = () => (
                   </TableCell>
                   <TableCell className="hidden xl:table-column">Sale</TableCell>
                   <TableCell className="hidden xl:table-column">
-                    <Badge className="text-xs" variant="outline">
-                      Approved
-                    </Badge>
+                    <Badge className="text-xs">Approved</Badge>
                   </TableCell>
                   <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
                     2023-06-26
@@ -188,9 +172,7 @@ const Page = () => (
                   </TableCell>
                   <TableCell className="hidden xl:table-column">Sale</TableCell>
                   <TableCell className="hidden xl:table-column">
-                    <Badge className="text-xs" variant="outline">
-                      Approved
-                    </Badge>
+                    <Badge className="text-xs">Approved</Badge>
                   </TableCell>
                   <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
                     2023-06-27
