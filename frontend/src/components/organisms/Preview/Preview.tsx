@@ -3,8 +3,15 @@
 import { useState } from 'react'
 import { FileText, ImagePlus, Printer, Scan } from 'lucide-react'
 
+interface LineItem {
+  item: string
+  rate: number
+  qty: number
+  lineTotal: number
+}
+
 const Preview = () => {
-  const [lineItems, setLineItems] = useState([
+  const [lineItems, setLineItems] = useState<LineItem[]>([
     {
       item: 'Design',
       rate: 100,
@@ -206,16 +213,17 @@ const Preview = () => {
                 </tr>
               </thead>
               <tbody>
-                {lineItems.map((lineItem, index) => (
-                  <tr key={index} className="bg-[#e7effc] rounded-lg">
-                    <td className="flex items-center gap-2 p-3 text-center">
-                      {lineItem.item}
-                    </td>
-                    <td className="p-3 text-center">{lineItem.rate}</td>
-                    <td className="p-3 text-center">{lineItem.qty}</td>
-                    <td className="p-3 text-center">{lineItem.lineTotal}</td>
-                  </tr>
-                ))}
+                {lineItems &&
+                  lineItems.map((lineItem: LineItem, index: number) => (
+                    <tr key={index} className="bg-[#e7effc] rounded-lg">
+                      <td className="flex items-center gap-2 p-3 text-center">
+                        {lineItem.item}
+                      </td>
+                      <td className="p-3 text-center">{lineItem.rate}</td>
+                      <td className="p-3 text-center">{lineItem.qty}</td>
+                      <td className="p-3 text-center">{lineItem.lineTotal}</td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
