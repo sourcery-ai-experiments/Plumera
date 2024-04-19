@@ -28,14 +28,14 @@ router
     router
       .group(() => {
         router.post('request-login-link', [SessionController, 'requestLoginLink'])
-        router.post('login/{token}', [SessionController, 'loginWithToken'])
+        router.get('login/:id', [SessionController, 'loginWithToken'])
         router.get('connect-to-google', [SessionController, 'connectToGoogle'])
         router.get('signin-callback', [SessionController, 'store'])
 
         router
           .group(() => {
-            router.get('me', [SessionController, 'me'])
-            router.delete('sign-out', [SessionController, 'destroy'])
+            router.get('whoami', [SessionController, 'whoami'])
+            router.delete('sign-out', [SessionController, 'logout'])
           })
           .use([middleware.auth()])
           .prefix('profile')

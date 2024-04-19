@@ -16,7 +16,11 @@ export default class TaxInformationsController {
   /**
    * Display form to create a new record
    */
-  async create({}: HttpContext) {}
+  async create({ request }: HttpContext) {
+    const data = request.all()
+
+    console.log(data)
+  }
 
   /**
    * Handle form submission for the create action

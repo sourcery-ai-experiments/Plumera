@@ -2,7 +2,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import { signinValidator } from '#validators/user'
 import mail from '@adonisjs/mail/services/main'
-import hash from '@adonisjs/core/services/hash'
+import jwt from 'jsonwebtoken'
 
 export default class SessionController {
   async requestLoginLink({ request, response }: HttpContext) {
@@ -14,13 +14,20 @@ export default class SessionController {
       return response.status(422).json({ message: 'Veuillez fournir une adresse e-mail valide.' })
     }
 
-    let user: User | null = await User.findBy('email', validator)
+    let user: User | null = await User.firstOrCreate({ email: validator.email })
 
     if (!user) {
-      user = await User.create({ email: validator.email })
+      return response.status(404).json({ message: 'Utilisateur non trouvé.' })
     }
 
-    user.magic_link_token = await hash.use('scrypt').make(new Date().getTime().toString())
+    user.magic_link_token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+      },
+      `${process.env.SECRET_KEY_JWT}`,
+      { expiresIn: '1h' }
+    )
     user.magic_link_token_expires_at = new Date(new Date().getTime() + 60 * 60 * 1000).toISOString()
     await user.save()
     await this.sendLoginEmail(user)
@@ -52,8 +59,8 @@ export default class SessionController {
     })
   }
 
-  async loginWithToken({ params, response }: HttpContext) {
-    const { token } = params
+  async loginWithToken({ params, response, auth }: HttpContext) {
+    const token = params.id
 
     const user: User = await User.query()
       .where('magic_link_token', token)
@@ -72,6 +79,9 @@ export default class SessionController {
     await user.save()
 
     const accessToken = await user.generateToken()
+
+    await auth.use('web').login(user)
+
     response.status(200).json({ message: 'Connecté avec succès.', user, access_token: accessToken })
   }
 
@@ -99,8 +109,6 @@ export default class SessionController {
 
     const GoogleUser = await google.user()
 
-    console.log('GoogleUser', GoogleUser)
-
     const user: User = await User.firstOrCreate(
       { google_id: GoogleUser.id },
       {
@@ -114,11 +122,15 @@ export default class SessionController {
     return response.ok({ message: 'Connecté avec succès.', user })
   }
 
-  async me({ auth }: HttpContext) {
-    return auth.user
+  async whoami({ auth, response }: HttpContext) {
+    auth.use('web').user
+
+    console.log('whoami', auth.user)
+
+    return response.ok(auth.user)
   }
 
-  async destroy({ auth, response }: HttpContext) {
+  async logout({ auth, response }: HttpContext) {
     await auth.use('web').logout()
 
     return response.redirect('/')

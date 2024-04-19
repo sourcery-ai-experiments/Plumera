@@ -194,6 +194,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@adonisjs/cors@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@adonisjs/cors@npm:2.2.1"
+  peerDependencies:
+    "@adonisjs/core": ^6.2.0
+  checksum: 10c0/eb5ec4dc53a6029ad6b070c5848411333eeff9f359baf27c33ac46fef121d5002d0ee0b3f7bca8969e6acc8f0da68e927009dd032b2ce28fcc07e6012ec0e415
+  languageName: node
+  linkType: hard
+
 "@adonisjs/encryption@npm:^6.0.1":
   version: 6.0.1
   resolution: "@adonisjs/encryption@npm:6.0.1"
@@ -1614,6 +1623,7 @@ __metadata:
     "@adonisjs/assembler": "npm:^7.1.1"
     "@adonisjs/auth": "npm:^9.2.0"
     "@adonisjs/core": "npm:^6.2.2"
+    "@adonisjs/cors": "npm:^2.2.1"
     "@adonisjs/eslint-config": "npm:^1.2.1"
     "@adonisjs/lucid": "npm:^20.5.1"
     "@adonisjs/mail": "npm:^9.2.1"

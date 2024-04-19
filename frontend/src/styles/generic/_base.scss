@@ -1,13 +1,8 @@
 @use '../settings/variables' as *;
 
-body.light-theme {
-  background-color: map-get($light-theme, background);
-  color: map-get($light-theme, text-color);
-}
-
-body.dark-theme {
-  background-color: map-get($dark-theme, background);
-  color: map-get($dark-theme, text-color);
+body {
+  background-color: $bleu-500;
+  color: black;
 }
 
 h1,
