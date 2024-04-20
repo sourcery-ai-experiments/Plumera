@@ -38,15 +38,7 @@ const Pricing = () => {
       <div
         aria-hidden="true"
         className="px:5 fixed inset-x-0 top-3 z-0 h-full w-full transform-gpu overflow-hidden blur-3xl md:right-20 md:h-auto md:w-auto md:px-36"
-      >
-        <div
-          className="mx-auto aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#FF71D7] to-[#C9A9E9] opacity-30 dark:opacity-[.15]"
-          style={{
-            clipPath:
-              'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-          }}
-        />
-      </div>
+      ></div>
       <div className="flex max-w-xl flex-col text-center">
         <h2 className="font-medium leading-7 text-secondary">Pricing</h2>
         <h1 className="text-4xl font-medium tracking-tight">
@@ -159,15 +151,7 @@ const Pricing = () => {
         <div className="relative -mx-8">
           {tiers.some((tier) => tier.mostPopular) ? (
             <div className="absolute inset-x-4 inset-y-0 z-0 flex">
-              <div
-                aria-hidden="true"
-                className="flex w-1/4 px-1"
-                style={{
-                  marginLeft: `${(tiers.findIndex((tier) => tier.mostPopular) + 1) * 25}%`,
-                }}
-              >
-                <div className="w-full rounded-medium border-small border-secondary/50 bg-background/60 backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50" />
-              </div>
+              <div aria-hidden="true" className="flex w-1/4 px-1"></div>
             </div>
           ) : null}
           <table className="w-full table-fixed border-separate border-spacing-x-4 text-left">
