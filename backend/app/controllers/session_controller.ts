@@ -131,6 +131,6 @@ export default class SessionController {
   async logout({ auth, response }: HttpContext) {
     await auth.use('web').logout()
 
-    return response.redirect('/')
+    return response.ok({ message: 'Déconnecté avec succès.' })
   }
 }

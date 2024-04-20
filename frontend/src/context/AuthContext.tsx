@@ -46,6 +46,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     const response = await api.delete('auth/sign-out')
 
+    console.log(response)
+
     if (response.status === 200) {
       localStorage.removeItem('access_token')
       setToken(null)
