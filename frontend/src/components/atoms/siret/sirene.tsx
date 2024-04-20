@@ -8,11 +8,13 @@ import { useState, useEffect, FormEvent } from 'react'
 import { toast } from 'sonner'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import api from '@/config/api'
+import { useSirene } from '@/app/hooks/useSirene'
 
 const Sirene = () => {
   const queryClient = useQueryClient()
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  const { data } = useSirene()
 
   const closeModal = () => {
     setIsOpen(false)
@@ -54,13 +56,13 @@ const Sirene = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setIsOpen(true)
-    }, 2000)
+      if (data && data[0] && !data[0].sirenNumber) {
+        setIsOpen(true)
+      }
+    }, 1000)
 
     return () => clearTimeout(timeout)
-  }, [])
-
-  console.log('loading', loading)
+  }, [data])
 
   return (
     <div

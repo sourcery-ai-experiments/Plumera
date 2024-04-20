@@ -6,8 +6,6 @@ import { useSirene } from '@/app/hooks/useSirene'
 const Page = () => {
   const { data } = useSirene()
 
-  console.log(data)
-
   if (!data) {
     return <div>Loading...</div>
   }
@@ -40,7 +38,8 @@ const Page = () => {
                     <input
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={data.company_name}
+                      defaultValue={data[0].companyName}
+                      placeholder={data[0].companyName}
                     />
                   </div>
                 </div>
@@ -107,7 +106,8 @@ const Page = () => {
                     <input
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={data.company_name}
+                      defaultValue={data[0].sirenNumber}
+                      placeholder={data[0].sirenNumber}
                     />
                   </div>
                 </div>
@@ -122,7 +122,40 @@ const Page = () => {
                     <input
                       type="email"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue="New York"
+                      defaultValue={data[0].tvaNumber}
+                      placeholder={data[0].sirenNumber}
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-4/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Legal structure
+                    </label>
+                    <input
+                      type="email"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      defaultValue={data[0].legalStructure}
+                      placeholder={data[0].legalStructure}
+                    />
+                  </div>
+                </div>
+                <div className="w-full lg:w-4/12 px-4">
+                  <div className="relative w-full mb-3">
+                    <label
+                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Legal status
+                    </label>
+                    <input
+                      type="email"
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      defaultValue={data[0].legalStatus}
+                      placeholder={data[0].legalStatus}
                     />
                   </div>
                 </div>

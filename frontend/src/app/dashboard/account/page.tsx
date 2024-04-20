@@ -1,17 +1,9 @@
 'use client'
 
 import React from 'react'
-import { useSirene } from '@/app/hooks/useSirene'
 
 const Page = () => {
-  const { data } = useSirene()
-
-  console.log(data)
-
-  if (!data) {
-    return <div>Loading...</div>
-  }
-
+  console.log('data')
   return (
     <section className="py-1 text-black">
       <div className="w-full px-4 mx-auto mt-6">
@@ -40,7 +32,6 @@ const Page = () => {
                     <input
                       type="text"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      defaultValue={data.company_name}
                     />
                   </div>
                 </div>
