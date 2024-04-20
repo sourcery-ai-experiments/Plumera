@@ -4,13 +4,16 @@ import {
   createPublicBusinessDataValidator,
   updatePublicBusinessDataValidator,
 } from '#validators/public_business_data'
+import User from '#models/user'
 
 export default class PublicBusinessDataController {
   /**
    * Display a list of resource
    */
-  async index({}: HttpContext) {
-    return PublicBusinessData.all()
+  async index({ auth, response }: HttpContext) {
+    const user: User = auth.user!
+    const publicBusinessData = await PublicBusinessData.query().where('user_id', user.id).exec()
+    return response.ok(publicBusinessData)
   }
 
   /**
@@ -84,6 +87,14 @@ export default class PublicBusinessDataController {
     await publicBusinessData.save()
 
     return response.ok(publicBusinessData)
+  }
+
+  async sirene({ request, response }: HttpContext) {
+    const data = request.only(['siren_number'])
+
+    console.log('data', data)
+
+    return response.ok(data)
   }
 
   /**

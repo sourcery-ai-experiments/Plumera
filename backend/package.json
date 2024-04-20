@@ -63,10 +63,12 @@
     "@adonisjs/session": "^7.4.0",
     "@poppinss/utils": "^6.7.3",
     "@vinejs/vine": "^2.0.0",
+    "axios": "^1.6.8",
     "jsonwebtoken": "^9.0.2",
     "luxon": "^3.4.4",
     "pg": "^8.11.5",
-    "reflect-metadata": "^0.2.1"
+    "reflect-metadata": "^0.2.1",
+    "undici": "^6.13.0"
   },
   "eslintConfig": {
     "extends": "@adonisjs/eslint-config/app"

@@ -1,8 +1,17 @@
 'use client'
 
-import { createContext, ReactNode, useContext, useState } from 'react'
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { CookieValueTypes, getCookie } from 'cookies-next'
 import api from '@/config/api'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 export const AuthContext = createContext<any>({
   isAuthenticated: () => false,
@@ -13,26 +22,56 @@ export const AuthContext = createContext<any>({
 export const useAuth = () => useContext(AuthContext)
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
+  const router: AppRouterInstance = useRouter()
+
   const [user, setUser] = useState<any>(null)
   const [token, setToken] = useState<any>(null)
   const [loadingToken, setLoadingToken] = useState(true)
-
-  const isAuthenticated = (): boolean => {
-    const token: CookieValueTypes = getCookie('')
-    return !!token
-  }
+  const [loading, setLoading] = useState(false)
 
   const connectWithGoogle = async () => {
-    const response = await api.get('auth/connect-with-google')
+    const response = await api.get('auth/connect-to-googlee')
     console.log(response)
   }
+
+  const whoami = async () => {
+    const response = await api.get('auth/whoami')
+
+    if (!response) {
+      throw new Error('unknown error')
+    }
+    setUser(response.data)
+  }
+
+  const logout = async () => {
+    const response = await api.delete('auth/sign-out')
+
+    if (response.status === 200) {
+      localStorage.removeItem('access_token')
+      setToken(null)
+      setUser(null)
+
+      toast.success('You have been logged out', {
+        position: 'bottom-center',
+      })
+
+      router.push('/')
+    }
+  }
+
+  useEffect(() => {
+    whoami()
+  }, [])
 
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated,
+        setToken,
         connectWithGoogle,
+        logout,
         user,
+        token,
+        loadingToken,
       }}
     >
       {children}

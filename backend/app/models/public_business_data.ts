@@ -11,6 +11,15 @@ export default class PublicBusinessData extends BaseModel {
   declare business_name: string
 
   @column()
+  declare siren_number: string
+
+  @column()
+  declare company_name: string
+
+  @column()
+  declare user_id: string
+
+  @column()
   declare country: string
 
   @column()
@@ -28,7 +37,9 @@ export default class PublicBusinessData extends BaseModel {
   @column()
   declare legal_status: string
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'user_id',
+  })
   declare user: BelongsTo<typeof User>
 
   @column.dateTime({ autoCreate: true })

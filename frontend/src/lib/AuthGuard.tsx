@@ -1,17 +1,18 @@
 'use client'
 
-import { ReactNode, useEffect } from 'react'
+import { ReactNode, Suspense, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import { useAuth } from '@/context/AuthContext'
 
 export default function AuthGuard({ children }: { children: ReactNode }) {
-  const { token, loadingToken } = useAuth()
   const router: AppRouterInstance = useRouter()
+  const token =
+    typeof window !== 'undefined' ? localStorage.getItem('access_token') : null
+  const loadingToken = false
 
   useEffect(() => {
     if (!token && !loadingToken) {
-      router.push('/')
+      router.push('/login')
     }
   }, [token, loadingToken, router])
 
@@ -19,5 +20,5 @@ export default function AuthGuard({ children }: { children: ReactNode }) {
     return <div>Loading...</div>
   }
 
-  return <>{children}</>
+  return <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
 }

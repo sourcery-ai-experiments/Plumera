@@ -10,6 +10,8 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 
+const ScrappersController = () => import('#controllers/scrappers_controller')
+
 const SessionController = () => import('#controllers/session_controller')
 const InvoiceItemsController = () => import('#controllers/invoice_items_controller')
 const InvoicesController = () => import('#controllers/invoices_controller')
@@ -28,7 +30,7 @@ router
     router
       .group(() => {
         router.post('request-login-link', [SessionController, 'requestLoginLink'])
-        router.get('login/:id', [SessionController, 'loginWithToken'])
+        router.post('login/:id', [SessionController, 'loginWithToken'])
         router.get('connect-to-google', [SessionController, 'connectToGoogle'])
         router.get('signin-callback', [SessionController, 'store'])
 
@@ -38,7 +40,6 @@ router
             router.delete('sign-out', [SessionController, 'logout'])
           })
           .use([middleware.auth()])
-          .prefix('profile')
       })
       .prefix('auth')
 
@@ -56,6 +57,7 @@ router
             router.resource('product-services', ProductServicesController).apiOnly()
             router.resource('public-business-data', PublicBusinessDataController).apiOnly()
             router.resource('tax-informations', TaxInformationsController).apiOnly()
+            router.post('scrappe-sirene', [ScrappersController, 'sirene'])
           })
           .prefix('business-data')
 

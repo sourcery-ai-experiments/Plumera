@@ -3,11 +3,10 @@
 import React, { useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { ToastContainer } from 'react-toastify'
 import { NextUIProvider } from '@nextui-org/react'
-import { LanguageProvider } from '@/context/LanguageContext'
 
 import '../styles/_main.scss'
+import { Toaster } from '@/components/ui/sonner'
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(
@@ -43,15 +42,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </head>
       <body>
         <main className="c-layout">
-          <LanguageProvider>
-            <NextUIProvider>
-              <QueryClientProvider client={queryClient}>
-                {children}
-                <ToastContainer />
-                <ReactQueryDevtools initialIsOpen />
-              </QueryClientProvider>
-            </NextUIProvider>
-          </LanguageProvider>
+          <NextUIProvider>
+            <QueryClientProvider client={queryClient}>
+              {children}
+              <Toaster />
+              <ReactQueryDevtools initialIsOpen />
+            </QueryClientProvider>
+          </NextUIProvider>
         </main>
       </body>
     </html>

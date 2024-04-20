@@ -4,11 +4,11 @@ docker compose down -v
 
 docker compose up --build -d --remove-orphans
 
-sleep 5
-
-docker exec -it backend node ace migration:rollback --batch 0
-
-docker exec -it backend node ace migration:run
+#sleep 5
+#
+#docker exec -it backend node ace migration:rollback --batch 0
+#
+#docker exec -it backend node ace migration:run
 
 #docker exec -it backend node ace db:seed --files "./database/seeders/user_seeder.ts"
 #docker exec -it backend node ace db:seed --files "./database/seeders/client_seeder.ts"

@@ -51,7 +51,7 @@ export default class SessionController {
           <body>
            <p>
              Cliquez sur le lien ci-dessous pour vous connecter:
-             http://localhost:5173/verify/?magic_link_token=${user.magic_link_token}
+             http://localhost:3000/verify/?magic_link_token=${user.magic_link_token}
            </p>
           </body>
         </html>
@@ -82,7 +82,7 @@ export default class SessionController {
 
     await auth.use('web').login(user)
 
-    response.status(200).json({ message: 'Connecté avec succès.', user, access_token: accessToken })
+    response.status(200).json({ message: 'Connecté avec succès.', access_token: accessToken })
   }
 
   async connectToGoogle({ ally }: HttpContext) {
@@ -124,8 +124,6 @@ export default class SessionController {
 
   async whoami({ auth, response }: HttpContext) {
     auth.use('web').user
-
-    console.log('whoami', auth.user)
 
     return response.ok(auth.user)
   }
