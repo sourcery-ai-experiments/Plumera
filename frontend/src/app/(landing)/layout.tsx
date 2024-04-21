@@ -1,17 +1,7 @@
-import type { Metadata } from 'next'
-
 import { cn } from '@/lib/utils'
+import { ReactNode } from 'react'
 
-export const metadata: Metadata = {
-  title: 'Convo | Language Learning',
-  description: 'Speech focused language learning',
-}
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="light">
       <body
