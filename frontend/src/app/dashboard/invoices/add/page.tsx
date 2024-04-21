@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 
 import {
   CircleCheck,
@@ -19,6 +19,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import ButtonUi from '@/components/atoms/button/button'
 import Preview from '@/components/organisms/Preview/Preview'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import api from '@/config/api'
+import { toast } from 'sonner'
 
 interface LineItem {
   item: string
@@ -28,6 +31,8 @@ interface LineItem {
 }
 
 const Page = () => {
+  const queryClient = useQueryClient()
+
   const [lineItems, setLineItems] = useState<LineItem[]>([])
   const [isEditable, setIsEditable] = useState<boolean[]>([])
   const [isEditableSubtotal, setIsEditableSubtotal] = useState<boolean>(false)
@@ -85,6 +90,36 @@ const Page = () => {
 
   const removeLineItem = (index: number): void => {
     setLineItems((prevState) => prevState.filter((_, i) => i !== index))
+  }
+
+  const SaveDataMutattion = useMutation<
+    { siren_number: FormDataEntryValue },
+    Error,
+    { siren_number: FormDataEntryValue }
+  >({
+    mutationFn: async (siren_number) =>
+      api.post(`business-data/scrappe-sirene`, siren_number),
+    onError: (e: any) => {
+      throw new Error(e)
+    },
+    onSuccess: (data) => {
+      console.log(data)
+      queryClient.invalidateQueries({ queryKey: ['tax_information'] })
+      toast.success('user updated', {
+        duration: 5000,
+        position: 'top-right',
+      })
+    },
+  })
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const form = event.currentTarget
+    const values = Object.fromEntries(new FormData(form))
+
+    console.log('values', values)
+    await SaveDataMutattion.mutateAsync(values)
   }
 
   return (

@@ -31,7 +31,7 @@ const Home = () => {
 
   const handleGoogleConnect = (): void => {
     api
-      .get('auth/google/redirect')
+      .get('auth/connect-to-google')
       .then((response: AxiosResponse) => {
         const redirectUrl = response.request.responseURL
         window.location.href = redirectUrl

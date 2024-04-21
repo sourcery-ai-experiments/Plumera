@@ -12,6 +12,7 @@ import { useSirene } from '@/app/hooks/useSirene'
 
 const Sirene = () => {
   const queryClient = useQueryClient()
+
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const { data } = useSirene()

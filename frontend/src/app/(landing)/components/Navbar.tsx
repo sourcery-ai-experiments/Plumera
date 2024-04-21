@@ -52,7 +52,7 @@ const Navbar = () => {
               {!isUserSignedIn ? (
                 <>
                   <Link
-                    href="/pricing"
+                    href="#pricing"
                     className={buttonVariants({
                       variant: 'ghost',
                       size: 'sm',
@@ -65,7 +65,7 @@ const Navbar = () => {
                       variant: 'ghost',
                       size: 'sm',
                     })}
-                    href="/sign-in"
+                    href="/login"
                   >
                     Sign in
                   </Link>

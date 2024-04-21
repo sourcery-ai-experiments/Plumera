@@ -34,7 +34,10 @@ const Pricing = () => {
   }
 
   return (
-    <div className="relative mx-auto flex max-w-7xl flex-col items-center py-24">
+    <div
+      className="relative mx-auto flex max-w-7xl flex-col items-center py-24"
+      id="pricing"
+    >
       <div
         aria-hidden="true"
         className="px:5 fixed inset-x-0 top-3 z-0 h-full w-full transform-gpu overflow-hidden blur-3xl md:right-20 md:h-auto md:w-auto md:px-36"
