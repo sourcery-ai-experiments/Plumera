@@ -23,6 +23,12 @@ export default class Invoice extends BaseModel {
   declare status: string
 
   @column()
+  declare notes: string
+
+  @column()
+  declare terms: string
+
+  @column()
   declare user_id: string
 
   @belongsTo(() => User)

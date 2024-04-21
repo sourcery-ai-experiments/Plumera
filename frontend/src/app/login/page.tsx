@@ -1,15 +1,18 @@
 'use client'
 
 import Button from '@/components/atoms/button/button'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import { useRouter } from 'next/navigation'
 import { AxiosResponse } from 'axios'
 import api from '@/config/api'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 const Home = () => {
+  const queryClient = useQueryClient()
   const router: AppRouterInstance = useRouter()
 
+  const [isClient, setIsClient] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
 
   const loginMutation = (email: void) => {
@@ -41,48 +44,50 @@ const Home = () => {
       })
   }
 
-  const handleSubmit = (event: any): void => {
-    event.preventDefault()
-    const { email } = event.target.elements
-    loginMutation(email.value)
-  }
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   return (
     <div className="c-login">
-      <div>
-        {/* <img src="/images/" alt="logo" /> */}
-        <h4>Bienvenue !</h4>
-        <p>Connectez-vous pour accéder à votre compte.</p>
+      {isClient && (
+        <div>
+          {/* <img src="/images/" alt="logo" /> */}
+          <h4>Bienvenue !</h4>
+          <p>Connectez-vous pour accéder à votre compte.</p>
 
-        <form onSubmit={handleSubmit}>
-          <div className="c-input">
-            <span className="c-input__subtitle">Email address</span>
-            <input
-              className="c-input__subtitle__input"
-              type="email"
-              placeholder="example@example.com"
-              name="email"
-              required
+          <form onSubmit={handleSubmit}>
+            <div className="c-input">
+              <span className="c-input__subtitle">Email address</span>
+              <input
+                className="c-input__subtitle__input"
+                type="email"
+                placeholder="example@example.com"
+                name="email"
+                required
+              />
+            </div>
+
+            <Button
+              label={
+                isLoaded ? 'Chargement...' : 'Envoyer le lien de connexion'
+              }
+              type="submit"
+              size="large"
             />
-          </div>
 
-          <Button
-            label={isLoaded ? 'Chargement...' : 'Envoyer le lien de connexion'}
-            type="submit"
-            size="large"
-          />
+            <hr />
 
-          <hr />
-
-          <Button
-            label="Se connecter avec google"
-            type="button"
-            size="large"
-            icon={<img src="/images/icons/google.svg" alt="" width={20} />}
-            onClick={handleGoogleConnect}
-          />
-        </form>
-      </div>
+            <Button
+              label="Se connecter avec google"
+              type="button"
+              size="large"
+              icon={<img src="/images/icons/google.svg" alt="" width={20} />}
+              onClick={handleGoogleConnect}
+            />
+          </form>
+        </div>
+      )}
     </div>
   )
 }

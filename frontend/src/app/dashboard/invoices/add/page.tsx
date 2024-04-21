@@ -22,6 +22,16 @@ import Preview from '@/components/organisms/Preview/Preview'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import api from '@/config/api'
 import { toast } from 'sonner'
+import { useAuth } from '@/context/AuthContext'
+
+interface CustomerData {
+  user_id: number
+  name: string
+  email: string
+  address: string
+  country: string
+  siren_number: string
+}
 
 interface LineItem {
   item: string
@@ -30,7 +40,19 @@ interface LineItem {
   lineTotal: number
 }
 
+interface InvoiceData {
+  user_id: number
+  client_id: number
+  date: Date
+  due_date: Date
+  notes: string
+  terms: string
+  total_amount: number
+  status: string
+}
+
 const Page = () => {
+  const { user } = useAuth()
   const queryClient = useQueryClient()
 
   const [lineItems, setLineItems] = useState<LineItem[]>([])
@@ -92,39 +114,93 @@ const Page = () => {
     setLineItems((prevState) => prevState.filter((_, i) => i !== index))
   }
 
-  const SaveDataMutattion = useMutation<
-    { siren_number: FormDataEntryValue },
-    Error,
-    { siren_number: FormDataEntryValue }
-  >({
-    mutationFn: async (siren_number) =>
-      api.post(`business-data/scrappe-sirene`, siren_number),
+  const SendCustomerMutation = useMutation<CustomerData, Error, CustomerData>({
+    mutationFn: (data) => api.post('billing/customer', data),
     onError: (e: any) => {
+      console.log('SendCustomerMutation', e)
+
       throw new Error(e)
     },
     onSuccess: (data) => {
-      console.log(data)
-      queryClient.invalidateQueries({ queryKey: ['tax_information'] })
-      toast.success('user updated', {
-        duration: 5000,
-        position: 'top-right',
-      })
+      console.log('SendCustomerMutation', data)
+      return queryClient.invalidateQueries({ queryKey: ['invoice'] })
     },
   })
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const SendItemsDataMutation = useMutation<LineItem, Error, LineItem>({
+    mutationFn: (data) => api.post('billing/invoice-item', data),
+    onError: (e: any) => {
+      console.log('SendItemsDataMutation', e)
+      throw new Error(e)
+    },
+    onSuccess: (data) => {
+      console.log('SendItemsDataMutation', data)
+      return queryClient.invalidateQueries({ queryKey: ['invoice-item'] })
+    },
+  })
+
+  const SendInvoiceMutation = useMutation<InvoiceData, Error, InvoiceData>({
+    mutationFn: (data) => api.post('billing/invoice', data),
+    onError: (e: any) => {
+      console.log('SendInvoiceMutation', e)
+      throw new Error(e)
+    },
+    onSuccess: (data) => {
+      console.log('SendInvoiceMutation', data)
+      return queryClient.invalidateQueries({ queryKey: ['invoice'] })
+    },
+  })
+
+  const handleSendInvoice = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const form = event.currentTarget
-    const values = Object.fromEntries(new FormData(form))
-
+    const values = Object.fromEntries(new FormData(form)) as {
+      [key: string]: string
+    }
     console.log('values', values)
-    //await SaveDataMutattion.mutateAsync(values)
-  }
 
+    const customerData: CustomerData = {
+      user_id: user.id,
+      name: values.name,
+      email: values.email,
+      address: values.address,
+      country: values.country,
+      siren_number: values.siren_number,
+    }
+
+    console.log('customerData', customerData)
+
+    const invoiceData: InvoiceData = {
+      user_id: user.id,
+      client_id: user.id,
+      date: new Date(),
+      due_date: new Date(),
+      total_amount: 0,
+      notes: values.notes,
+      terms: values.terms,
+      status: 'draft',
+    }
+
+    console.log('invoiceData', invoiceData)
+
+    const lineItemsData: LineItem[] = lineItems.map((lineItem) => ({
+      item: lineItem.item,
+      rate: lineItem.rate,
+      qty: lineItem.qty,
+      lineTotal: lineItem.lineTotal,
+    }))
+    console.log('lineItemsData', lineItemsData)
+
+    SendCustomerMutation.mutate(customerData)
+    SendInvoiceMutation.mutate(invoiceData)
+    lineItemsData.map((lineItem) => {
+      return SendItemsDataMutation.mutate(lineItem)
+    })
+  }
   return (
     <section className="px-6 py-6">
-      <div className="flex gap-12 text-black">
+      <form onSubmit={handleSendInvoice} className="flex gap-12 text-black">
         <div className="w-3/4">
           <header className="flex justify-between items-center gap-12">
             <div className="flex justify-center items-center">
@@ -153,6 +229,7 @@ const Page = () => {
               <div className="border border-dashed border-gray-500 relative bg-[#e7effc] rounded-xl my-6 w-full">
                 <input
                   type="file"
+                  name="logo"
                   multiple
                   className="cursor-pointer relative block opacity-0 w-full h-full p-20 z-50"
                 />
@@ -186,6 +263,7 @@ const Page = () => {
                     <Input
                       className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                       type="text"
+                      name="compagny"
                       id="compagny"
                       placeholder="Eva"
                     />
@@ -200,6 +278,7 @@ const Page = () => {
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                         type="text"
                         id="address"
+                        name="address"
                         placeholder="626 W Pender St #500, Vancouver, BC V6B 1V9, Canada"
                       />
                     </div>
@@ -212,6 +291,7 @@ const Page = () => {
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                         type="text"
                         id="address2"
+                        name="address2"
                         placeholder="626 W Pender St #500, Vancouver, BC V6B 1V9, Canada"
                       />
                     </div>
@@ -223,6 +303,7 @@ const Page = () => {
                       <Input
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                         type="text"
+                        name="city"
                         id="city"
                         placeholder="Vancouver"
                       />
@@ -235,6 +316,7 @@ const Page = () => {
                       <Input
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                         type="text"
+                        name="postalCode"
                         id="postalCode"
                         placeholder="V6B 1V9"
                       />
@@ -248,6 +330,7 @@ const Page = () => {
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                         type="text"
                         id="country"
+                        name="country"
                         placeholder="Canada"
                       />
                     </div>
@@ -260,6 +343,7 @@ const Page = () => {
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                         type="tel"
                         id="phone"
+                        name="phone"
                         placeholder="+1 604-682-2344"
                       />
                     </div>
@@ -299,6 +383,7 @@ const Page = () => {
                               className="mt-1 w-full px-3 py-2 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                               type="text"
                               id="item"
+                              name={`item-${index}`}
                               placeholder="Design"
                               disabled={!isEditable[index]}
                               value={lineItem.item}
@@ -322,6 +407,7 @@ const Page = () => {
                               className="mt-1 w-full px-3 py-2 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                               type="number"
                               id="rate"
+                              name={`rate-${index}`}
                               placeholder="100"
                               disabled={!isEditable[index]}
                               value={lineItem.rate.toString()}
@@ -345,6 +431,7 @@ const Page = () => {
                               className="mt-1 w-full px-3 py-2 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                               type="number"
                               id="qty"
+                              name={`qty-${index}`}
                               placeholder="1"
                               disabled={!isEditable[index]}
                               value={lineItem.qty.toString()}
@@ -369,6 +456,7 @@ const Page = () => {
                                 className="mt-1 w-full px-3 py-2 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                                 type="number"
                                 id="lineTotal"
+                                name={`lineTotal-${index}`}
                                 placeholder="100"
                                 disabled={!isEditable[index]}
                                 value={lineItem.lineTotal.toString()}
@@ -438,6 +526,7 @@ const Page = () => {
                               className="mt-1 w-full px-3 py-2 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                               type="text"
                               id="item"
+                              name="item"
                               placeholder="Design"
                             />
                           )}
@@ -458,6 +547,7 @@ const Page = () => {
                             <Input
                               className="mt-1 w-full px-3 py-2 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                               type="number"
+                              name="rate"
                               id="rate"
                               placeholder="100"
                             />
@@ -479,6 +569,7 @@ const Page = () => {
                             <Input
                               className="mt-1 w-full px-3 py-2 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                               type="number"
+                              name="qty"
                               id="qty"
                               placeholder="1"
                             />
@@ -508,14 +599,15 @@ const Page = () => {
                               Discount
                               <PencilLine
                                 className="w-4 h-4 hover:text-blue-700"
-                                id="item"
+                                id="discount"
                               />
                             </button>
                           ) : (
                             <Input
                               className="mt-1 w-full px-3 py-2 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                               type="text"
-                              id="item"
+                              name="discount"
+                              id="discount"
                               placeholder="Design"
                             />
                           )}
@@ -537,6 +629,7 @@ const Page = () => {
                               className="mt-1 w-full px-3 py-2 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                               type="number"
                               id="rate"
+                              name="rate"
                               placeholder="100"
                             />
                           )}
@@ -558,6 +651,7 @@ const Page = () => {
                               className="mt-1 w-full px-3 py-2 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                               type="number"
                               id="qty"
+                              name="qty"
                               placeholder="1"
                             />
                           )}
@@ -601,13 +695,14 @@ const Page = () => {
                       partir de la date de leur émission
                       <PencilLine
                         className="w-4 h-4 hover:text-blue-700"
-                        id="item"
+                        id="note"
                       />
                     </button>
                   ) : (
                     <textarea
                       className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                       id="notes"
+                      name="notes"
                       placeholder="Notes"
                     />
                   )}
@@ -630,13 +725,14 @@ const Page = () => {
                       partir de la date de leur émission
                       <PencilLine
                         className="w-4 h-4 hover:text-blue-700"
-                        id="item"
+                        id="terms"
                       />
                     </button>
                   ) : (
                     <textarea
                       className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                       id="terms"
+                      name="terms"
                       placeholder="Terms"
                     />
                   )}
@@ -644,15 +740,18 @@ const Page = () => {
               </div>
 
               <div className="flex justify-end items-center gap-2 w-full my-8">
-                <ButtonUi label="Enregistrer en tant que brouillon" />
-                <ButtonUi label="Envoyer la facture" />
+                <ButtonUi
+                  label="Enregistrer en tant que brouillon"
+                  type="button"
+                />
+                <ButtonUi label="Envoyer la facture" type="submit" />
               </div>
             </div>
           </div>
         </div>
 
         <Preview />
-      </div>
+      </form>
     </section>
   )
 }

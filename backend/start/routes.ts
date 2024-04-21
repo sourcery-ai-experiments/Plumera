@@ -21,6 +21,7 @@ const PlansController = () => import('#controllers/plans_controller')
 const ProductServicesController = () => import('#controllers/product_services_controller')
 const PublicBusinessDataController = () => import('#controllers/public_business_data_controller')
 const TaxInformationsController = () => import('#controllers/tax_informations_controller')
+const ClientsController = () => import('#controllers/clients_controller')
 
 router
   .group(() => {
@@ -47,8 +48,9 @@ router
       .group(() => {
         router
           .group(() => {
-            router.resource('invoice-items', InvoiceItemsController).apiOnly()
-            router.resource('invoices', InvoicesController).apiOnly()
+            router.resource('customer', ClientsController).apiOnly()
+            router.resource('invoice-item', InvoiceItemsController).apiOnly()
+            router.resource('invoice', InvoicesController).apiOnly()
           })
           .prefix('billing')
 

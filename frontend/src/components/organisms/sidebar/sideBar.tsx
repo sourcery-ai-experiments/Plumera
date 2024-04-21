@@ -24,7 +24,7 @@ const Sidebar: FunctionComponent = () => {
   return (
     <section className="c-sidebar">
       <div className="logo">
-        <img src="/logo/logo-white.png" alt="logo skipperndt" />
+        <img src="/logo/logo_blanc.png" alt="logo skipperndt" />
       </div>
 
       <Link

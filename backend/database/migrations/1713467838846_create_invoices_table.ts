@@ -10,6 +10,8 @@ export default class InvoicesSchema extends BaseSchema {
       table.uuid('client_id').unsigned().references('id').inTable('clients').onDelete('CASCADE')
       table.dateTime('date').notNullable()
       table.dateTime('due_date').notNullable()
+      table.text('notes').nullable()
+      table.text('terms').nullable()
       table.decimal('total_amount', 12, 2).notNullable()
       table.string('status').notNullable()
       table.timestamp('created_at').notNullable()
