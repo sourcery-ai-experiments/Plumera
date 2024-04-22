@@ -1,18 +1,12 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
 import {
   LogOut,
   User,
   Cloud,
   CreditCard,
-  Github,
-  Keyboard,
   LifeBuoy,
   Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
   Settings,
   UserPlus,
   Users,
@@ -28,7 +22,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,

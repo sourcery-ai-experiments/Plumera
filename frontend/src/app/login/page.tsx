@@ -6,10 +6,8 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.share
 import { useRouter } from 'next/navigation'
 import { AxiosResponse } from 'axios'
 import api from '@/config/api'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 const Home = () => {
-  const queryClient = useQueryClient()
   const router: AppRouterInstance = useRouter()
 
   const [isClient, setIsClient] = useState(false)
@@ -42,6 +40,12 @@ const Home = () => {
       .catch((error: any) => {
         console.error('Error:', error)
       })
+  }
+
+  const handleSubmit = (event: any): void => {
+    event.preventDefault()
+    const { email } = event.target.elements
+    loginMutation(email.value)
   }
 
   useEffect(() => {

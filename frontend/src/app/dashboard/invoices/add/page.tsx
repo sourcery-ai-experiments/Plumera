@@ -15,17 +15,25 @@ import {
   Trash2,
   Plus,
 } from 'lucide-react'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import ButtonUi from '@/components/atoms/button/button'
 import Preview from '@/components/organisms/Preview/Preview'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import api from '@/config/api'
-import { toast } from 'sonner'
 import { useAuth } from '@/context/AuthContext'
 
 interface CustomerData {
-  user_id: number
+  user_id: string
   name: string
   email: string
   address: string
@@ -41,8 +49,8 @@ interface LineItem {
 }
 
 interface InvoiceData {
-  user_id: number
-  client_id: number
+  user_id: string
+  client_id: string
   date: Date
   due_date: Date
   notes: string
@@ -61,6 +69,7 @@ const Page = () => {
   const [editableNote, setEditableNote] = useState<boolean>(false)
   const [editableTerms, setEditableTerms] = useState<boolean>(false)
   const [completed, setCompleted] = useState<boolean>(false)
+  const [clientId, setClientId] = useState<string>('')
 
   const makeEditable = (index: number): void => {
     setIsEditable((prevState) => {
@@ -122,7 +131,8 @@ const Page = () => {
       throw new Error(e)
     },
     onSuccess: (data) => {
-      console.log('SendCustomerMutation', data)
+      setClientId(data.data.id)
+      console.log('SendCustomerMutation', data.data.id)
       return queryClient.invalidateQueries({ queryKey: ['invoice'] })
     },
   })
@@ -158,7 +168,6 @@ const Page = () => {
     const values = Object.fromEntries(new FormData(form)) as {
       [key: string]: string
     }
-    console.log('values', values)
 
     const customerData: CustomerData = {
       user_id: user.id,
@@ -173,7 +182,7 @@ const Page = () => {
 
     const invoiceData: InvoiceData = {
       user_id: user.id,
-      client_id: user.id,
+      client_id: clientId,
       date: new Date(),
       due_date: new Date(),
       total_amount: 0,
@@ -193,11 +202,13 @@ const Page = () => {
     console.log('lineItemsData', lineItemsData)
 
     SendCustomerMutation.mutate(customerData)
-    SendInvoiceMutation.mutate(invoiceData)
+    SendInvoiceMutation.mutateAsync(invoiceData)
     lineItemsData.map((lineItem) => {
-      return SendItemsDataMutation.mutate(lineItem)
+      return SendItemsDataMutation.mutateAsync(lineItem)
     })
   }
+
+  console.log('client_id', clientId)
   return (
     <section className="px-6 py-6">
       <form onSubmit={handleSendInvoice} className="flex gap-12 text-black">
@@ -240,6 +251,10 @@ const Page = () => {
                     <span className="text-blue-700">brower</span>
                   </h4>
                 </div>
+              </div>
+
+              <div className="bg-[#e7effc] rounded-xl w-full my-6 p-2">
+                SELECT CUSTOMER
               </div>
 
               <div className="bg-[#e7effc] rounded-xl w-full">

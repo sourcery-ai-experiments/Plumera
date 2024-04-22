@@ -18,7 +18,6 @@ const InvoicesController = () => import('#controllers/invoices_controller')
 const OrdersController = () => import('#controllers/orders_controller')
 const PaymentsController = () => import('#controllers/payments_controller')
 const PlansController = () => import('#controllers/plans_controller')
-const ProductServicesController = () => import('#controllers/product_services_controller')
 const PublicBusinessDataController = () => import('#controllers/public_business_data_controller')
 const TaxInformationsController = () => import('#controllers/tax_informations_controller')
 const ClientsController = () => import('#controllers/clients_controller')
@@ -56,7 +55,6 @@ router
 
         router
           .group(() => {
-            router.resource('product-services', ProductServicesController).apiOnly()
             router.resource('public-business-data', PublicBusinessDataController).apiOnly()
             router.resource('tax-informations', TaxInformationsController).apiOnly()
             router.post('scrappe-sirene', [ScrappersController, 'sirene'])

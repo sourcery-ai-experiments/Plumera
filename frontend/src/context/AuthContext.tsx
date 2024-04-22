@@ -7,14 +7,12 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { CookieValueTypes, getCookie } from 'cookies-next'
 import api from '@/config/api'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 export const AuthContext = createContext<any>({
-  isAuthenticated: () => false,
   user: null,
   connectWithGoogle: async () => {},
 })
@@ -27,7 +25,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<any>(null)
   const [token, setToken] = useState<any>(null)
   const [loadingToken, setLoadingToken] = useState(true)
-  const [loading, setLoading] = useState(false)
 
   const connectWithGoogle = async () => {
     const response = await api.get('auth/connect-to-googlee')
@@ -57,7 +54,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         position: 'bottom-center',
       })
 
-      router.push('/')
+      router.push('/login')
     }
   }
 
