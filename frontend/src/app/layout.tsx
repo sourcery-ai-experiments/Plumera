@@ -7,6 +7,7 @@ import { NextUIProvider } from '@nextui-org/react'
 
 import '../styles/_main.scss'
 import { Toaster } from '@/components/ui/sonner'
+import { ThemeProvider } from 'next-themes'
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(
@@ -41,15 +42,22 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
-        <main className="c-layout">
-          <NextUIProvider>
-            <QueryClientProvider client={queryClient}>
-              {children}
-              <Toaster />
-              <ReactQueryDevtools initialIsOpen />
-            </QueryClientProvider>
-          </NextUIProvider>
-        </main>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <main className="c-layout">
+            <NextUIProvider>
+              <QueryClientProvider client={queryClient}>
+                {children}
+                <Toaster />
+                <ReactQueryDevtools initialIsOpen />
+              </QueryClientProvider>
+            </NextUIProvider>
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   )

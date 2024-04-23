@@ -1,8 +1,13 @@
 @use '../settings/variables' as *;
 
-body {
+/*body {
   background-color: $bleu-500;
   color: black;
+}*/
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 h1,

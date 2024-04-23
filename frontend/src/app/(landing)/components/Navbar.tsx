@@ -1,14 +1,22 @@
 import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
-
+import { Moon, Sun } from 'lucide-react'
+import { useTheme } from 'next-themes'
 import { buttonVariants } from '@/components/ui/button'
 import MaxWidthWrapper from '@/app/(landing)/components/MaxWidthWrapper'
 import { MobileNav } from '@/app/(landing)/components/MobileNav'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 const Navbar = () => {
-  // Replace with your auth of choice, e.g. Clerk: const { userId } = auth();
   const isUserSignedIn = false
+  const { setTheme } = useTheme()
 
   return (
     <nav
@@ -92,6 +100,27 @@ const Navbar = () => {
             {isUserSignedIn && (
               <div className="bg-emerald-600 border-2 border-black shadow-lg rounded-full w-10 h-10"></div>
             )}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  <span className="sr-only">Toggle theme</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setTheme('light')}>
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('dark')}>
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('system')}>
+                  System
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </MaxWidthWrapper>
