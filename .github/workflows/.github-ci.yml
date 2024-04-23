@@ -9,9 +9,14 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-      - uses: pre-commit/action@v3.0.1
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+      - name: Install pre-commit
+        uses: pre-commit/action@v3.0.1
 
   backend-compile:
     runs-on: ubuntu-latest
