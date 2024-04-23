@@ -80,7 +80,6 @@ const Page = () => {
   }
 
   const saveInvoice = (index: number): void => {
-    console.log('saveInvoice function called', index)
     setLineItems((prevState) =>
       prevState.map((lineItem, i) => {
         if (i === index) {
@@ -126,7 +125,6 @@ const Page = () => {
   const SendCustomerMutation = useMutation<CustomerData, Error, CustomerData>({
     mutationFn: (data) => api.post('billing/customer', data),
     onError: (e: any) => {
-      console.log('SendCustomerMutation', e)
       throw new Error(e)
     },
     onSuccess: (data) => {
@@ -138,11 +136,9 @@ const Page = () => {
   const SendItemsDataMutation = useMutation<LineItem, Error, LineItem>({
     mutationFn: (data) => api.post('billing/invoice-item', data),
     onError: (e: any) => {
-      console.log('SendItemsDataMutation', e)
       throw new Error(e)
     },
     onSuccess: (data) => {
-      console.log('SendItemsDataMutation', data)
       return queryClient.invalidateQueries({ queryKey: ['invoice-item'] })
     },
   })
@@ -150,11 +146,9 @@ const Page = () => {
   const SendInvoiceMutation = useMutation<InvoiceData, Error, InvoiceData>({
     mutationFn: (data) => api.post('billing/invoice', data),
     onError: (e: any) => {
-      console.log('SendInvoiceMutation', e)
       throw new Error(e)
     },
     onSuccess: (data) => {
-      console.log('SendInvoiceMutation', data)
       return queryClient.invalidateQueries({ queryKey: ['invoice'] })
     },
   })
@@ -180,10 +174,6 @@ const Page = () => {
       await SendCustomerMutation.mutateAsync(customerData)
     const clientId = customerResponse.data.id
 
-    console.log('clientId', clientId)
-
-    console.log('customerData', customerData)
-
     const invoiceData: InvoiceData = {
       user_id: user.id,
       client_id: clientId,
@@ -194,8 +184,6 @@ const Page = () => {
       terms: values.terms,
       status: 'draft',
     }
-
-    console.log('invoiceData', invoiceData)
 
     const lineItemsData: LineItem[] = lineItems.map((lineItem) => ({
       item: lineItem.item,
