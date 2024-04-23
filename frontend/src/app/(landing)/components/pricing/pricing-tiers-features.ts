@@ -7,50 +7,23 @@ const features: PricingFeatures = [
     title: "Content",
     items: [
       {
-        title: "New apps & screens releases",
+        title: "Outil de facture",
         tiers: {
-          [TiersEnum.Free]: "Latest 4 apps",
+          [TiersEnum.Free]: true,
           [TiersEnum.Pro]: true,
           [TiersEnum.Team]: true,
         },
         helpText:
-          "Enjoy over 1,000+ screens uploaded every week. Get notified via email whenever new screens are added.",
+          "",
       },
       {
-        title: "Access to latest versions",
+        title: "Accès aux dernières version",
         tiers: {
           [TiersEnum.Free]: false,
           [TiersEnum.Pro]: true,
           [TiersEnum.Team]: true,
         },
-        helpText: "Access to latest screenshots of an app cataloged by expert curators.",
-      },
-      {
-        title: "Access to previous versions",
-        tiers: {
-          [TiersEnum.Free]: "Limited to 3 rows",
-          [TiersEnum.Pro]: "Unlimited",
-          [TiersEnum.Team]: "Unlimited",
-        },
-        helpText: "Version travel across versions of an app cataloged.",
-      },
-      {
-        title: "Access to flows of apps",
-        tiers: {
-          [TiersEnum.Free]: "Limited to 3 rows",
-          [TiersEnum.Pro]: "Unlimited",
-          [TiersEnum.Team]: "Unlimited",
-        },
-        helpText: "Access to screens organized by flows like onboarding or login.",
-      },
-      {
-        title: "Filter & search results",
-        tiers: {
-          [TiersEnum.Free]: "Limited to 3 rows",
-          [TiersEnum.Pro]: "Unlimited",
-          [TiersEnum.Team]: "Unlimited",
-        },
-        helpText: "Find apps, screens, or flows by filtering across 10,000+ screens.",
+        helpText: "Accédez aux dernières fonctionalités avant tout le monde",
       },
     ],
   },
@@ -58,34 +31,74 @@ const features: PricingFeatures = [
     title: "Features",
     items: [
       {
-        title: "Collections",
+        title: "Facturation",
         tiers: {
-          [TiersEnum.Free]: "Up to 3 collections",
-          [TiersEnum.Pro]: "Unlimited",
-          [TiersEnum.Team]: "Unlimited",
+          [TiersEnum.Free]: "Illimité",
+          [TiersEnum.Pro]: "Illimité",
+          [TiersEnum.Team]: "Illimité",
         },
-        helpText: "Save apps, screens or flows into collections for later viewing.",
+        helpText: "Facturez facilement vos clients",
       },
       {
-        title: "Copy to clipboard",
+        title: "Clients",
+        tiers: {
+          [TiersEnum.Free]: "Jusqu'à 3 enregistrement",
+          [TiersEnum.Pro]: "Illimité",
+          [TiersEnum.Team]: "Illimité",
+        },
+        helpText: "Ajoutez vos clients directement sur l'appli pour plus de simplicité",
+      },
+      {
+        title: "Raccourci",
         tiers: {
           [TiersEnum.Free]: true,
           [TiersEnum.Pro]: true,
           [TiersEnum.Team]: true,
         },
-        helpText: "Quickly copy screens into your clipboard to be pasted into other tools.",
+        helpText: "Retrouvez rapidement toutes les fonctionalités grâce aux raccourcis",
       },
       {
-        title: "Screen download",
+        title: "Automatisation",
         tiers: {
           [TiersEnum.Free]: true,
           [TiersEnum.Pro]: true,
           [TiersEnum.Team]: true,
         },
-        helpText: "Download screens as PNG.",
+        helpText: "Ne perdez plus de temps à inserer vos informations entreprise ou celle des clients",
+      },
+
+      {
+        title: "Dashboard",
+        tiers: {
+          [TiersEnum.Free]: true,
+          [TiersEnum.Pro]: true,
+          [TiersEnum.Team]: true,
+        },
+        helpText:
+          "Retrouvez votre profit et autres données sur le dashboard",
       },
       {
-        title: "Batch download",
+        title: "Calendrier",
+        tiers: {
+          [TiersEnum.Free]: false,
+          [TiersEnum.Pro]: true,
+          [TiersEnum.Team]: true,
+        },
+        helpText:
+            "Plannifiez vos rendez-vous pro avec notre calendrier",
+      },
+      {
+        title: "Optimisation",
+        tiers: {
+          [TiersEnum.Free]: false,
+          [TiersEnum.Pro]: true,
+          [TiersEnum.Team]: true,
+        },
+        helpText:
+            "Easily batch-download multiple screens at one go from apps, flows, your collections and more.",
+      },
+      {
+        title: "Chat Bot AI",
         tiers: {
           [TiersEnum.Free]: false,
           [TiersEnum.Pro]: true,
@@ -96,126 +109,135 @@ const features: PricingFeatures = [
       },
     ],
   },
-  {
-    title: "Collaboration",
-    items: [
-      {
-        title: "Team members",
-        tiers: {
-          [TiersEnum.Free]: "Just you",
-          [TiersEnum.Pro]: "Just you",
-          [TiersEnum.Team]: "Unlimited",
-        },
-        helpText: "Collaborate with other users in a team.",
-      },
-      {
-        title: "Team collections",
-        tiers: {
-          [TiersEnum.Free]: false,
-          [TiersEnum.Pro]: false,
-          [TiersEnum.Team]: true,
-        },
-        helpText: "Create collections shared across your team.",
-      },
-      {
-        title: "Team administration",
-        tiers: {
-          [TiersEnum.Free]: false,
-          [TiersEnum.Pro]: false,
-          [TiersEnum.Team]: true,
-        },
-        helpText:
-          "Add or remove members from your team to manage access to membership and collections.",
-      },
-      {
-        title: "Flexible seat-based licensing",
-        tiers: {
-          [TiersEnum.Free]: false,
-          [TiersEnum.Pro]: false,
-          [TiersEnum.Team]: true,
-        },
-        helpText:
-          "Membership licenses are purchased by seats, which can be provisioned to or removed from users.",
-      },
-    ],
-  },
-  {
-    title: "Security & Access",
-    items: [
-      {
-        title: "SAML Single Sign-On (SSO)",
-        tiers: {
-          [TiersEnum.Free]: false,
-          [TiersEnum.Pro]: false,
-          [TiersEnum.Team]: true,
-        },
-        helpText:
-          "Access through Okta, ADFS, Azure, Onelogin, or your own SAML identity provider (IdP).",
-      },
-      {
-        title: "SCIM user provisioning",
-        tiers: {
-          [TiersEnum.Free]: false,
-          [TiersEnum.Pro]: false,
-          [TiersEnum.Team]: true,
-        },
-        helpText:
-          "Sync user directories with Okta, Azure AD, Onelogin, or your own SCIM identity provider (IdP).",
-      },
-    ],
-  },
-  {
-    title: "Billing",
-    items: [
-      {
-        title: "Flexible payment options",
-        tiers: {
-          [TiersEnum.Free]: false,
-          [TiersEnum.Pro]: false,
-          [TiersEnum.Team]: true,
-        },
-        helpText:
-          "Option to pay via invoice and bank transfers on a net 30, 45 or 60 payment term. Available upon request.",
-      },
-      {
-        title: "Custom security assessment",
-        tiers: {
-          [TiersEnum.Free]: false,
-          [TiersEnum.Pro]: false,
-          [TiersEnum.Team]: true,
-        },
-        helpText:
-          "Our team will help answer security assessments or questionnaires for your organization. Available upon request.",
-      },
-      {
-        title: "Custom agreement",
-        tiers: {
-          [TiersEnum.Free]: false,
-          [TiersEnum.Pro]: false,
-          [TiersEnum.Team]: true,
-        },
-        helpText:
-          "Standardized SaaS agreement for your organization’s legal requirement. Available upon request.",
-      },
-    ],
-  },
+  // {
+  //   title: "Collaboration",
+  //   items: [
+  //     {
+  //       title: "Team members",
+  //       tiers: {
+  //         [TiersEnum.Free]: "Just you",
+  //         [TiersEnum.Pro]: "Just you",
+  //         [TiersEnum.Team]: "Unlimited",
+  //       },
+  //       helpText: "Collaborate with other users in a team.",
+  //     },
+  //     {
+  //       title: "Team collections",
+  //       tiers: {
+  //         [TiersEnum.Free]: false,
+  //         [TiersEnum.Pro]: false,
+  //         [TiersEnum.Team]: true,
+  //       },
+  //       helpText: "Create collections shared across your team.",
+  //     },
+  //     {
+  //       title: "Team administration",
+  //       tiers: {
+  //         [TiersEnum.Free]: false,
+  //         [TiersEnum.Pro]: false,
+  //         [TiersEnum.Team]: true,
+  //       },
+  //       helpText:
+  //         "Add or remove members from your team to manage access to membership and collections.",
+  //     },
+  //     {
+  //       title: "Flexible seat-based licensing",
+  //       tiers: {
+  //         [TiersEnum.Free]: false,
+  //         [TiersEnum.Pro]: false,
+  //         [TiersEnum.Team]: true,
+  //       },
+  //       helpText:
+  //         "Membership licenses are purchased by seats, which can be provisioned to or removed from users.",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Security & Access",
+  //   items: [
+  //     {
+  //       title: "SAML Single Sign-On (SSO)",
+  //       tiers: {
+  //         [TiersEnum.Free]: false,
+  //         [TiersEnum.Pro]: false,
+  //         [TiersEnum.Team]: true,
+  //       },
+  //       helpText:
+  //         "Access through Okta, ADFS, Azure, Onelogin, or your own SAML identity provider (IdP).",
+  //     },
+  //     {
+  //       title: "SCIM user provisioning",
+  //       tiers: {
+  //         [TiersEnum.Free]: false,
+  //         [TiersEnum.Pro]: false,
+  //         [TiersEnum.Team]: true,
+  //       },
+  //       helpText:
+  //         "Sync user directories with Okta, Azure AD, Onelogin, or your own SCIM identity provider (IdP).",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "Billing",
+  //   items: [
+  //     {
+  //       title: "Flexible payment options",
+  //       tiers: {
+  //         [TiersEnum.Free]: false,
+  //         [TiersEnum.Pro]: false,
+  //         [TiersEnum.Team]: true,
+  //       },
+  //       helpText:
+  //         "Option to pay via invoice and bank transfers on a net 30, 45 or 60 payment term. Available upon request.",
+  //     },
+  //     {
+  //       title: "Custom security assessment",
+  //       tiers: {
+  //         [TiersEnum.Free]: false,
+  //         [TiersEnum.Pro]: false,
+  //         [TiersEnum.Team]: true,
+  //       },
+  //       helpText:
+  //         "Our team will help answer security assessments or questionnaires for your organization. Available upon request.",
+  //     },
+  //     {
+  //       title: "Custom agreement",
+  //       tiers: {
+  //         [TiersEnum.Free]: false,
+  //         [TiersEnum.Pro]: false,
+  //         [TiersEnum.Team]: true,
+  //       },
+  //       helpText:
+  //         "Standardized SaaS agreement for your organization’s legal requirement. Available upon request.",
+  //     },
+  //   ],
+  // },
   {
     title: "Support",
     items: [
-      {
-        title: "Help center",
-        tiers: {
-          [TiersEnum.Free]: true,
-          [TiersEnum.Pro]: true,
-          [TiersEnum.Team]: true,
-        },
-        helpText:
-          "Browse our articles in our knowledge base to find answers to your questions regarding the platform.",
-      },
+      // {
+      //   title: "Help center",
+      //   tiers: {
+      //     [TiersEnum.Free]: true,
+      //     [TiersEnum.Pro]: true,
+      //     [TiersEnum.Team]: true,
+      //   },
+      //   helpText:
+      //     "Browse our articles in our knowledge base to find answers to your questions regarding the platform.",
+      // },
       {
         title: "Email support",
         tiers: {
-          [TiersEnum.Free]: "Best effort basis",
+          [TiersEnum.Free]: "Peut prendre jusqu'à 3 jours",
+          [TiersEnum.Pro]: "Réponse en moins de 24h",
+          [TiersEnum.Team]: true,
+        },
+        helpText: "Recevez de l'aide par email",
+      },
+      {
+        title: "Chatbot AI support",
+        tiers: {
+          [TiersEnum.Free]: false,
           [TiersEnum.Pro]: true,
           [TiersEnum.Team]: true,
         },
