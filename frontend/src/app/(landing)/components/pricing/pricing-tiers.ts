@@ -53,8 +53,8 @@ export const tiers: Array<Tier> = [
     mostPopular: false,
     description: "For large teams that have more than 10 members.",
     price: {
-      yearly: "0-60",
-      quarterly: "0-6",
+      yearly: "0-60€",
+      quarterly: "0-6€",
     },
     // priceSuffix: "per user",
     features: [

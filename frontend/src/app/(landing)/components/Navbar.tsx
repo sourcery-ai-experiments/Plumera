@@ -24,7 +24,7 @@ const Navbar = () => {
             className="flex z-40 justify-center items-center gap-1"
           >
             <Image
-              src="/logo.png"
+              src="/logo-full.png"
               alt="Plumera logo"
               width={50}
               height={50}
