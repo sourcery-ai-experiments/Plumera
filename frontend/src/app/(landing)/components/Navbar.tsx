@@ -13,10 +13,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useEffect } from 'react'
 
 const Navbar = () => {
   const isUserSignedIn = false
-  const { setTheme } = useTheme()
+  const { setTheme, theme } = useTheme()
+
+  useEffect(() => {
+    return localStorage.setItem('theme', theme as string)
+  }, [theme])
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) {
+      setTheme(savedTheme)
+    }
+  }, [])
 
   return (
     <nav
