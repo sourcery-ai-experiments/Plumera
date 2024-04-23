@@ -69,7 +69,6 @@ const Page = () => {
   const [editableNote, setEditableNote] = useState<boolean>(false)
   const [editableTerms, setEditableTerms] = useState<boolean>(false)
   const [completed, setCompleted] = useState<boolean>(false)
-  const [clientId, setClientId] = useState<string>('')
 
   const makeEditable = (index: number): void => {
     setIsEditable((prevState) => {
@@ -127,13 +126,11 @@ const Page = () => {
     mutationFn: (data) => api.post('billing/customer', data),
     onError: (e: any) => {
       console.log('SendCustomerMutation', e)
-
       throw new Error(e)
     },
     onSuccess: (data) => {
-      setClientId(data.data.id)
-      console.log('SendCustomerMutation', data.data.id)
-      return queryClient.invalidateQueries({ queryKey: ['invoice'] })
+      queryClient.invalidateQueries({ queryKey: ['clients'] })
+      return data
     },
   })
 
@@ -161,7 +158,7 @@ const Page = () => {
     },
   })
 
-  const handleSendInvoice = (event: FormEvent<HTMLFormElement>) => {
+  const handleSendInvoice = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const form = event.currentTarget
@@ -177,6 +174,12 @@ const Page = () => {
       country: values.country,
       siren_number: values.siren_number,
     }
+
+    const customerResponse =
+      await SendCustomerMutation.mutateAsync(customerData)
+    const clientId = customerResponse.data.id
+
+    console.log('clientId', clientId)
 
     console.log('customerData', customerData)
 
@@ -201,14 +204,12 @@ const Page = () => {
     }))
     console.log('lineItemsData', lineItemsData)
 
-    SendCustomerMutation.mutate(customerData)
-    SendInvoiceMutation.mutateAsync(invoiceData)
-    lineItemsData.map((lineItem) => {
-      return SendItemsDataMutation.mutateAsync(lineItem)
+    await SendInvoiceMutation.mutateAsync(invoiceData)
+    lineItemsData.map(async (lineItem) => {
+      return await SendItemsDataMutation.mutateAsync(lineItem)
     })
   }
 
-  console.log('client_id', clientId)
   return (
     <section className="px-6 py-6">
       <form onSubmit={handleSendInvoice} className="flex gap-12 text-black">
