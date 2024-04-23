@@ -43,13 +43,13 @@ const Pricing = () => {
         className="px:5 fixed inset-x-0 top-3 z-0 h-full w-full transform-gpu overflow-hidden blur-3xl md:right-20 md:h-auto md:w-auto md:px-36"
       ></div>
       <div className="flex max-w-xl flex-col text-center">
-        <h2 className="font-medium leading-7 text-secondary">Pricing</h2>
+        <h2 className="font-medium leading-7 text-secondary">Prix</h2>
         <h1 className="text-4xl font-medium tracking-tight">
-          Compare plans & features.
+          Choisissez une version par défaut ou contactez nous pour une offre personalisée
         </h1>
         <Spacer y={4} />
         <h2 className="text-large text-default-500">
-          Discover the ideal plan, beginning at under $2 per week.
+          Essayez la version basique gratuitement pendant 14 jours !
         </h2>
       </div>
       <Spacer y={8} />
@@ -65,18 +65,18 @@ const Pricing = () => {
       >
         <Tab
           key={FrequencyEnum.Yearly}
-          aria-label="Pay Yearly"
+          aria-label="Paiement Annuel"
           className="pr-0.5"
           title={
             <div className="flex items-center gap-2">
-              <p>Pay Yearly</p>
+              <p>Paiement annuel</p>
               <Chip color="secondary" variant="flat">
                 Save 25%
               </Chip>
             </div>
           }
         />
-        <Tab key={FrequencyEnum.Quarterly} title="Pay Quarterly" />
+        <Tab key={FrequencyEnum.Quarterly} title="Paiement Mensuel" />
       </Tabs>
 
       <Spacer y={12} />
@@ -319,14 +319,14 @@ const Pricing = () => {
         </div>
       </div>
       <Spacer y={12} />
-      <div className="flex py-2">
-        <p className="text-default-400">
-          Are you an open source developer?&nbsp;
-          <Link color="foreground" href="#" underline="always">
-            Get a discount
-          </Link>
-        </p>
-      </div>
+      {/*<div className="flex py-2">*/}
+      {/*  <p className="text-default-400">*/}
+      {/*    Are you an open source developer?&nbsp;*/}
+      {/*    <Link color="foreground" href="#" underline="always">*/}
+      {/*      Get a discount*/}
+      {/*    </Link>*/}
+      {/*  </p>*/}
+      {/*</div>*/}
     </div>
   )
 }

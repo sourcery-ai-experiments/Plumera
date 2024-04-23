@@ -24,14 +24,14 @@ const Navbar = () => {
             className="flex z-40 justify-center items-center gap-1"
           >
             <Image
-              src="/logo.png"
-              alt="convo logo"
+              src="/logo-full.png"
+              alt="Plumera logo"
               width={50}
               height={50}
               quality={100}
               className="w-7 h-7"
             />
-            <span className="text-2xl font-semibold">Convo</span>
+            <span className="text-2xl font-semibold">Plumera</span>
           </Link>
           <div className="flex gap-1 sm:gap-4 items-center">
             {!isUserSignedIn ? (
@@ -58,7 +58,7 @@ const Navbar = () => {
                       size: 'sm',
                     })}
                   >
-                    Pricing
+                    Prix
                   </Link>
                   <Link
                     className={buttonVariants({
@@ -67,7 +67,7 @@ const Navbar = () => {
                     })}
                     href="/login"
                   >
-                    Sign in
+                    Connectez-vous
                   </Link>
                   <Link
                     className={buttonVariants({

@@ -3,33 +3,35 @@ import type {Frequency, Tier} from "./pricing-types";
 import {FrequencyEnum, TiersEnum} from "./pricing-types";
 
 export const frequencies: Array<Frequency> = [
-  {key: FrequencyEnum.Yearly, label: "Pay Yearly", priceSuffix: "per year"},
-  {key: FrequencyEnum.Quarterly, label: "Pay Quarterly", priceSuffix: "per quarter"},
+  {key: FrequencyEnum.Yearly, label: "Paiement Annuel", priceSuffix: "par an"},
+  {key: FrequencyEnum.Quarterly, label: "Paiement Mensuel", priceSuffix: "par mois"},
 ];
 
 export const tiers: Array<Tier> = [
   {
     key: TiersEnum.Free,
-    title: "Free",
-    price: "Free",
-    href: "#",
+    title: "basique",
+    price: {
+      yearly: "20€",
+      quarterly: "2€",
+    },    href: "#",
     featured: false,
     mostPopular: false,
-    description: "For starters and hobbyists that want to try out.",
+    description: "Pour facturez facilment vos clients",
     features: ["10 users included", "2 GB of storage", "Help center access", "Email support"],
-    buttonText: "Continue with Free",
-    buttonColor: "default",
-    buttonVariant: "flat",
+    buttonText: "Essayez gratuitement",
+    buttonColor: "primary",
+    buttonVariant: "solid",
   },
   {
     key: TiersEnum.Pro,
     title: "Pro",
-    description: "For small teams that have less that 10 members.",
+    description: "Pour gagnez en efficacité avec un outil tout-en-un ",
     href: "#",
     mostPopular: true,
     price: {
-      yearly: "$72",
-      quarterly: "$24",
+      yearly: "55€",
+      quarterly: "5.95€",
     },
     featured: false,
     features: [
@@ -38,30 +40,31 @@ export const tiers: Array<Tier> = [
       "Help center access",
       "Priority email support",
     ],
-    buttonText: "Get started",
+    buttonText: "Démarrez",
     buttonColor: "primary",
     buttonVariant: "solid",
   },
+
   {
     key: TiersEnum.Team,
-    title: "Team",
+    title: "Personalisé",
     href: "#",
     featured: true,
     mostPopular: false,
     description: "For large teams that have more than 10 members.",
     price: {
-      yearly: "$90",
-      quarterly: "$120",
+      yearly: "0-60€",
+      quarterly: "0-6€",
     },
-    priceSuffix: "per user",
+    // priceSuffix: "per user",
     features: [
       "50 users included",
       "30 GB of storage",
       "Help center access",
       "Phone & email support",
     ],
-    buttonText: "Contact us",
-    buttonColor: "default",
-    buttonVariant: "flat",
+    buttonText: "Nous contacter",
+    buttonColor: "primary",
+    buttonVariant: "solid",
   },
 ];
