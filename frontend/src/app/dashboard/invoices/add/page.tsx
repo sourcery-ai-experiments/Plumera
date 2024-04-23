@@ -31,6 +31,7 @@ import Preview from '@/components/organisms/Preview/Preview'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import api from '@/config/api'
 import { useAuth } from '@/context/AuthContext'
+import { toast } from 'sonner'
 
 interface CustomerData {
   user_id: string
@@ -51,8 +52,8 @@ interface LineItem {
 interface InvoiceData {
   user_id: string
   client_id: string
-  date: Date
-  due_date: Date
+  date: string
+  due_date: string
   notes: string
   terms: string
   total_amount: number
@@ -186,8 +187,8 @@ const Page = () => {
     const invoiceData: InvoiceData = {
       user_id: user.id,
       client_id: clientId,
-      date: new Date(),
-      due_date: new Date(),
+      date: new Date().toISOString(),
+      due_date: new Date().toISOString(),
       total_amount: 0,
       notes: values.notes,
       terms: values.terms,
@@ -204,9 +205,21 @@ const Page = () => {
     }))
     console.log('lineItemsData', lineItemsData)
 
-    await SendInvoiceMutation.mutateAsync(invoiceData)
     lineItemsData.map(async (lineItem) => {
       return await SendItemsDataMutation.mutateAsync(lineItem)
+    })
+    const response = await SendInvoiceMutation.mutateAsync(invoiceData)
+
+    if (!response) {
+      toast.error('Invoice not sent', {
+        position: 'top-right',
+      })
+
+      throw new Error('unknown error')
+    }
+
+    toast.success('Invoice sent successfully', {
+      position: 'top-right',
     })
   }
 
