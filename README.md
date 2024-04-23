@@ -7,6 +7,7 @@ python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
 pre-commit install
+pre-commit run --show-diff-on-failure --color=always --all-files
 ```
 
 
