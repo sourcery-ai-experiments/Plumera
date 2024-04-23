@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import Invoice from '#models/invoice'
-import ProductService from '#models/product_service'
+
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
 export default class InvoiceItem extends BaseModel {
@@ -10,9 +10,6 @@ export default class InvoiceItem extends BaseModel {
 
   @column()
   declare invoice_id: string
-
-  @column()
-  declare product_service_id: string
 
   @column()
   declare quantity: number
@@ -25,9 +22,6 @@ export default class InvoiceItem extends BaseModel {
 
   @belongsTo(() => Invoice)
   declare invoice: BelongsTo<typeof Invoice>
-
-  @belongsTo(() => ProductService)
-  declare productService: BelongsTo<typeof ProductService>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
