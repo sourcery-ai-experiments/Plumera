@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 
 import { cn } from '@/lib/utils'
 
@@ -14,7 +13,7 @@ const Navbar = () => {
   return (
     <nav
       className={cn(
-        'sticky h-14 inset-x-0 top-0 z-30 border-b border-gray-200  bg-white/40 backdrop-blur-lg transition-all',
+        'sticky h-14 inset-x-0 top-0 z-30 border-b border-gray-200 backdrop-blur-lg transition-all',
       )}
     >
       <MaxWidthWrapper>
@@ -23,13 +22,10 @@ const Navbar = () => {
             href="/"
             className="flex z-40 justify-center items-center gap-1"
           >
-            <Image
-              src="/logo-full.png"
+            <img
+              src="/logo/icon-logo.png"
               alt="Plumera logo"
-              width={50}
-              height={50}
-              quality={100}
-              className="w-7 h-7"
+              className="w-40 h-40"
             />
             <span className="text-2xl font-semibold">Plumera</span>
           </Link>
