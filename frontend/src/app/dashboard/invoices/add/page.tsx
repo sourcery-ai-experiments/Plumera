@@ -15,15 +15,6 @@ import {
   Trash2,
   Plus,
 } from 'lucide-react'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import ButtonUi from '@/components/atoms/button/button'
@@ -32,15 +23,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import api from '@/config/api'
 import { useAuth } from '@/context/AuthContext'
 import { toast } from 'sonner'
-
-interface CustomerData {
-  user_id: string
-  name: string
-  email: string
-  address: string
-  country: string
-  siren_number: string
-}
 
 interface LineItem {
   item: string
@@ -122,7 +104,7 @@ const Page = () => {
     setLineItems((prevState) => prevState.filter((_, i) => i !== index))
   }
 
-  const SendCustomerMutation = useMutation<CustomerData, Error, CustomerData>({
+  const SendCustomerMutation = useMutation<any, any>({
     mutationFn: (data) => api.post('billing/customer', data),
     onError: (e: any) => {
       throw new Error(e)
@@ -143,7 +125,7 @@ const Page = () => {
     },
   })
 
-  const SendInvoiceMutation = useMutation<InvoiceData, Error, InvoiceData>({
+  const SendInvoiceMutation = useMutation<any>({
     mutationFn: (data) => api.post('billing/invoice', data),
     onError: (e: any) => {
       throw new Error(e)
@@ -161,7 +143,7 @@ const Page = () => {
       [key: string]: string
     }
 
-    const customerData: CustomerData = {
+    const customerData: any = {
       user_id: user.id,
       name: values.name,
       email: values.email,
@@ -174,7 +156,7 @@ const Page = () => {
       await SendCustomerMutation.mutateAsync(customerData)
     const clientId = customerResponse.data.id
 
-    const invoiceData: InvoiceData = {
+    const invoiceData: any = {
       user_id: user.id,
       client_id: clientId,
       date: new Date().toISOString(),
