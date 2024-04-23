@@ -17,6 +17,8 @@ jobs:
         run: |
           git config --global user.email "kouahofrancis@gmail.com"
           git config --global user.name "Francis KOUAHO"
+      - name: Verify Git status
+        run: git status
       - name: Install pre-commit
         run: |
           pip install pre-commit
