@@ -45,7 +45,7 @@ const Navbar = () => {
             <img
               src="/logo/icon-logo.png"
               alt="Plumera logo"
-              className="w-40 h-40"
+              className="w-[60px] h-[60px] "
             />
             <span className="text-2xl font-semibold">Plumera</span>
           </Link>
