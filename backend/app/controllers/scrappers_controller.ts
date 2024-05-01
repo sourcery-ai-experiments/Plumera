@@ -1,7 +1,7 @@
-import { HttpContext } from '@adonisjs/core/http'
 import axios from 'axios'
-import PublicBusinessData from '#models/public_business_data'
 import env from '#start/env'
+import { HttpContext } from '@adonisjs/core/http'
+import PublicBusinessData from '#models/public_business_data'
 
 interface TypeVoieDictionary {
   [key: string]: string
@@ -148,7 +148,7 @@ export default class ScrappersController {
       return response.notFound('No data found for the provided SIREN number.')
     } catch (error) {
       console.error('Error fetching data for SIREN:', siren_number, error)
-      return this.handleErrorResponse(error, response)
+      return response.internalServerError('Failed to fetch data for the provided SIREN number.')
     }
   }
 
@@ -182,16 +182,6 @@ export default class ScrappersController {
     } catch (error) {
       console.error("Échec de l'authentification:", error)
       throw new Error('Authentication failed')
-    }
-  }
-
-  handleErrorResponse(error: any, response: HttpContext['response']) {
-    if (error.response) {
-      return response.status(error.response.status).send(error.response.data)
-    } else if (error.request) {
-      return response.internalServerError('Error setting up request to SIRENE API.')
-    } else {
-      return response.internalServerError('Error setting up request to SIRENE API.')
     }
   }
 }
