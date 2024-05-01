@@ -1,11 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import CustomerModal from '@/app/(landing)/components/modal/customer/CustomerModal'
-import SirenModal from '@/app/(landing)/components/modal/customer/SirenModal'
-import DeleteCustomer from '@/app/(landing)/components/modal/customer/DeleteCustomer'
+import CustomerModal from '@/components/molecules/modal/customer/CustomerModal'
+import SirenModal from '@/components/molecules/modal/customer/SirenModal'
+import DeleteCustomer from '@/components/molecules/modal/customer/DeleteCustomer'
 import { fetchClientDetails, deleteClient } from '@/lib/customer'
-import { Client } from '@/types/Client'
+import { ClientProps } from '@/types/ClientProps'
 import { CirclePlus, MoreHorizontal, Trash, Edit } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -20,8 +20,8 @@ import {
 const Page = () => {
   const [isCustomerModalOpen, setCustomerModalOpen] = useState<boolean>(false)
   const [isSirenModalOpen, setSirenModalOpen] = useState<boolean>(false)
-  const [customerData, setCustomerData] = useState<Client | null>(null)
-  const [clients, setClients] = useState<Client[]>([])
+  const [customerData, setCustomerData] = useState<ClientProps | null>(null)
+  const [clients, setClients] = useState<ClientProps[]>([])
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null)
   const [isDeleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
   const [clientIdToDelete, setClientIdToDelete] = useState<string | null>(null)
@@ -38,13 +38,13 @@ const Page = () => {
     loadClients()
   }, [])
 
-  const handleSirenSubmit = (sirenData: Client | null = null) => {
+  const handleSirenSubmit = (sirenData: ClientProps | null = null) => {
     setCustomerData(sirenData)
     setSirenModalOpen(false)
     setCustomerModalOpen(true)
   }
 
-  const openCustomerModal = (client: Client | null = null) => {
+  const openCustomerModal = (client: ClientProps | null = null) => {
     if (client) {
       setCustomerData(client)
       setIsUpdating(true)
@@ -64,11 +64,11 @@ const Page = () => {
     setCustomerModalOpen(false)
   }
 
-  const onAddClient = (client: Client, isUpdating: boolean): void => {
-    setClients((prevClients: Client[]): Client[] => {
+  const onAddClient = (client: ClientProps, isUpdating: boolean): void => {
+    setClients((prevClients: ClientProps[]): ClientProps[] => {
       return isUpdating
         ? prevClients.map(
-            (existingClient: Client): Client =>
+            (existingClient: ClientProps): ClientProps =>
               existingClient.id === client.id ? client : existingClient,
           )
         : [...prevClients, client]
@@ -88,7 +88,7 @@ const Page = () => {
     try {
       if (clientIdToDelete) {
         await deleteClient(clientIdToDelete)
-        setClients((clients: Client[]): Client[] =>
+        setClients((clients: ClientProps[]): ClientProps[] =>
           clients.filter((client) => client.id !== clientIdToDelete),
         )
         setDeleteModalOpen(false)
@@ -119,6 +119,7 @@ const Page = () => {
             <button
               onClick={openSirenModal}
               style={{ display: 'flex', gap: '5px' }}
+              className="flex justify-center items-center"
             >
               Ajouter un client
               <CirclePlus className="w-3 h-3" />

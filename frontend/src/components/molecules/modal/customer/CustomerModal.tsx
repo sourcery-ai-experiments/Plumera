@@ -6,13 +6,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { createCustomer, updateCustomer } from '@/lib/customer'
-import { Client } from '@/types/Client'
+import { ClientProps } from '@/types/ClientProps'
 
 interface CustomerModalProps {
   isOpen: boolean
   onClose: () => void
-  initialData: Client | null
-  onAddClient: (client: Client, isUpdating: boolean) => void
+  initialData: ClientProps | null
+  onAddClient: (client: ClientProps, isUpdating: boolean) => void
   isUpdating: boolean
 }
 
@@ -23,7 +23,7 @@ function CustomerModal({
   onAddClient,
   isUpdating,
 }: CustomerModalProps) {
-  const [client, setClient] = useState<Client>({
+  const [client, setClient] = useState<ClientProps>({
     first_name: '',
     last_name: '',
     email: '',
@@ -64,7 +64,7 @@ function CustomerModal({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
-    setClient((prev) => ({ ...prev, [name as keyof Client]: value }))
+    setClient((prev) => ({ ...prev, [name as keyof ClientProps]: value }))
   }
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()

@@ -15,7 +15,7 @@ import {
   UseMutationResult,
 } from '@tanstack/react-query'
 import { getSirenDetails } from '@/lib/customer'
-import { Client } from '@/types/Client'
+import { ClientProps } from '@/types/ClientProps'
 
 interface SirenModalProps {
   isOpen: boolean
@@ -31,7 +31,7 @@ function SirenModal({ isOpen, onClose, onSirenSubmit }: SirenModalProps) {
     useMutation({
       mutationFn: getSirenDetails,
       onError: (error: Error) => {},
-      onSuccess: (data: Client) => {
+      onSuccess: (data: ClientProps) => {
         queryClient.invalidateQueries({ queryKey: ['tax_information'] })
         onSirenSubmit(data)
         resetAndClose()

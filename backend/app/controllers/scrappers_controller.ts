@@ -93,7 +93,13 @@ export default class ScrappersController {
     return response.created('client')
   }
 
-  async getSireneInfo({ request, response }: HttpContext) {
+  async getSireneInfo({ request, response, auth }: HttpContext) {
+    const suerId = auth.user!.id
+
+    if (!suerId) {
+      return response.unauthorized()
+    }
+
     const siren_number = request.input('siren_number')
 
     try {
@@ -116,6 +122,7 @@ export default class ScrappersController {
           data.formality.content.personnePhysique.adresseEntreprise.adresse.typeVoie
         )
         const clientData = {
+          user_id: suerId,
           first_name:
             data.formality.content.personnePhysique.identite.entrepreneur.descriptionPersonne.prenoms.join(
               ' '
