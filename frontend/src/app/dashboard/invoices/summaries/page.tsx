@@ -107,7 +107,7 @@ const Page = () => {
                   </Label>
                 </td>
                 <td className="p-3 text-center">{invoice.client.firstName}</td>
-                <td className="p-3 text-center">{invoice.total}€</td>
+                <td className="p-3 text-center">{invoice.totalAmount}€</td>
                 <td className="p-3 text-center">{invoice.client.firstName + invoice.client.lastName}</td>
                 <td className="p-3 text-center">
                   <span className={`bg-${invoice.status === 'Paid' ? 'green-200' : 'red-200'} text-${invoice.status === 'Paid' ? 'green-600' : 'red-600'} py-1 px-3 rounded-full text-xs`}>

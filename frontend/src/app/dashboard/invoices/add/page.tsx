@@ -60,11 +60,9 @@ interface InvoiceData {
   client_id: string
   date: string
   due_date: string
-  note: string
-  terms: string
   notes: string
+  terms: string
   total_amount: number
-  discount: number
   status: string
 }
 
@@ -87,7 +85,7 @@ interface CustomerData {
 
 interface SubTotal {
     name?: string;
-    discountRate?: number;
+    discount?: number;
     total?: number;
 }
 
@@ -99,16 +97,16 @@ const Page = () => {
   const [lineItems, setLineItems] = useState<LineItem[]>([])
   const [isEditable, setIsEditable] = useState<boolean[]>([])
   const [isEditableSubtotal, setIsEditableSubtotal] = useState<boolean>(false)
-  const [editableNote, setEditableNote] = useState<boolean>(false)
+  const [editablenotes, setEditablenotes] = useState<boolean>(false)
   const [editableTerms, setEditableTerms] = useState<boolean>(false)
   const [completed, setCompleted] = useState<boolean>(false)
   const [open, setOpen] = useState(false)
   const [customer, setCustomer] = useState<CustomerData | null>(null);
-  const [note, setNote] = useState<String>("");
+  const [notes, setnotes] = useState<String>("");
   const [terms, setTerms] = useState<String>("");
   const [subTotal, setSubTotal] = useState<SubTotal>({
     name: 'Réduction',
-    discountRate: 0,  // default discount price as an example
+    discount: 0,  // default discount price as an example
     total: 0         // default total as an example
   });
   const [formValid, setFormValid] = useState(false);
@@ -132,14 +130,10 @@ const Page = () => {
       errors.push("Client ID is required.");
     }
 
-    // Check if the discount rate is provided and is a number
-    if (typeof invoiceData.discountRate !== 'number' || isNaN(invoiceData.discountRate)) {
-      errors.push("Valid discount rate is required.");
-    }
 
-    // Ensure the note field is not empty if it's required
-    if (!invoiceData.note) {
-      errors.push("Note is required.");
+    // Ensure the notes field is not empty if it's required
+    if (!invoiceData.notes) {
+      errors.push("notes is required.");
     }
 
     // Ensure terms are provided if necessary
@@ -202,7 +196,7 @@ const Page = () => {
       const newState = {
         ...prevState,
         [field]: value,
-        total: field === 'discountRate' ? getSubTotal(getTotalInvoices(),value) : prevState.total
+        total: field === 'discount' ? getSubTotal(getTotalInvoices(),value) : prevState.total
       };
       console.log('New state:', newState);
       return newState;
@@ -235,8 +229,8 @@ const Page = () => {
     setIsEditableSubtotal((prevState) => !prevState)
   }
 
-  const makeEditableNote = (): void => {
-    setEditableNote((prevState) => !prevState)
+  const makeEditablenotes = (): void => {
+    setEditablenotes((prevState) => !prevState)
   }
 
   const makeEditableTerms = (): void => {
@@ -304,7 +298,7 @@ const Page = () => {
     // List required fields and check if they are filled
     const requiredFields = [
       'userId', 'company', 'address', 'city', 'zip', 'state',
-      'phone', 'email', 'lastName', 'firstName', 'vatNumber', 'sirenNumber'
+      'phone', 'email', 'lastName', 'firstName', 'sirenNumber'
     ];
 
     requiredFields.forEach(field => {
@@ -338,8 +332,8 @@ const Page = () => {
     mutationFn: (data) => {
       const fullData = {
         ...data,
-        discountRate: data.discountRate,
-        note: data.note,
+        discount: data.discount,
+        notes: data.notes,
         terms: data.terms,
       };
       return api.post('billing/invoice', fullData);
@@ -368,11 +362,15 @@ const Page = () => {
 
 
   const handleSubmit = () => {
-      const invoiceData = {
+
+
+    const newInvoiceData = {
         client_id: customer?.id,  // Ensure you check for existence
-        discountRate: subTotal?.discountRate,
-        note: note,
+        discount: subTotal?.discount,
+        notes: notes,
         terms: terms,
+        total_amount:(getTotalInvoices() - subTotal.discount).toFixed(2),
+        status: 'sent',
         // Other fields as necessary
       };
 
@@ -381,7 +379,7 @@ const Page = () => {
       alert('Veuillez remplir tous les champs');  // Or handle this with a more user-friendly notification
       return;  // Stop the submission process
     }
-    const validationInvoiceErrors = validateInvoiceData(invoiceData);
+    const validationInvoiceErrors = validateInvoiceData(newInvoiceData);
 
 
     if(validationInvoiceErrors.length > 0) {
@@ -401,8 +399,8 @@ const Page = () => {
 
 
     // Only call the mutation if all required fields are properly filled
-    if (invoiceData.client_id) {
-      SendInvoiceMutation.mutate(invoiceData);
+    if (newInvoiceData.client_id) {
+      SendInvoiceMutation.mutate(newInvoiceData);
     } else {
       console.error('Customer data is incomplete.');
     }
@@ -425,7 +423,7 @@ const Page = () => {
       due_date: new Date().toISOString(),
       total_amount: 0,
       discount: 0,
-      notes: values.notes,
+      notess: values.notess,
       terms: values.terms,
       status: 'draft',
     }
@@ -495,8 +493,8 @@ const Page = () => {
     }, 0);
   };
 
-  const getSubTotal = (pTotal:number, pDiscountRate:number):number => {
-    return pTotal - (pTotal * pDiscountRate / 100);
+  const getSubTotal = (pTotal:number, pdiscount:number):number => {
+    return pTotal - (pTotal * pdiscount / 100);
   }
 
   const handleCustomerChange = (field: keyof CustomerData, value: string) => {
@@ -1078,10 +1076,10 @@ const Page = () => {
                             <Input
                               className="mt-1 w-full px-3 py-2 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
                               type="number"
-                              name="discountRate"
-                              id="discountRate"
-                              value={subTotal.discountRate}
-                              onChange={(e) => handleSubTotalChange('discountRate', e.target.value)}
+                              name="discount"
+                              id="discount"
+                              value={subTotal.discount}
+                              onChange={(e) => handleSubTotalChange('discount', e.target.value)}
                               placeholder="100"
                               readOnly={!isEditableSubtotal}
                               disabled={!isEditableSubtotal}
@@ -1110,7 +1108,7 @@ const Page = () => {
                               disabled={!isEditableSubtotal}
                               readOnly
                               placeholder="1"
-                              value={(getTotalInvoices()-subTotal.discountRate).toFixed(2)}
+                              value={(getTotalInvoices()-subTotal.discount).toFixed(2)}
                             />
                           )}
                         </td>
@@ -1145,7 +1143,7 @@ const Page = () => {
                               name="total"
                               id="total"
                               placeholder="100"
-                              value={(getTotalInvoices(false)-subTotal.discountRate).toFixed(2)}
+                              value={(getTotalInvoices(false)-subTotal.discount).toFixed(2)}
 
                               readOnly
 
@@ -1170,7 +1168,7 @@ const Page = () => {
                               type="number"
                               id="totalTva"
                               name="totalTva"
-                              value={(getTotalInvoices()-subTotal.discountRate).toFixed(2)}
+                              value={(getTotalInvoices()-subTotal.discount).toFixed(2)}
                               readOnly
                               placeholder="100"
                             />
@@ -1190,7 +1188,7 @@ const Page = () => {
                           <h5>Total à régler</h5>
                         </td>
                         <td className="p-3 text-center font-black text-black">
-                          {(getTotalInvoices() - subTotal.discountRate).toFixed(2)}€
+                          {(getTotalInvoices() - subTotal.discount).toFixed(2)}€
                         </td>
                       </tr>
                     </tbody>
@@ -1200,13 +1198,13 @@ const Page = () => {
 
               <div className="w-full my-">
                 <div className="flex justify-between items-center w-full gap-3 mb-2">
-                  <p className="font-black text-sm">Notes</p>
+                  <p className="font-black text-sm">notess</p>
                 </div>
                 <div className="grid w-full items-center gap-1.5 my-2">
-                  {!editableNote ? (
+                  {!editablenotes ? (
                     <button
                       className="w-full text-sm font-normal"
-                      onClick={makeEditableNote}
+                      onClick={makeEditablenotes}
                     >
                       Les factures devront être réglées en Euros (€) dès
                       réception, et au plus tard dans un délai de X jours (délai
@@ -1214,16 +1212,16 @@ const Page = () => {
                       partir de la date de leur émission
                       <PencilLine
                         className="w-4 h-4 hover:text-blue-700"
-                        id="note"
+                        id="notes"
                       />
                     </button>
                   ) : (
                     <textarea
                       className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm focus:bg-white"
-                      id="notes"
-                      name="notes"
-                      placeholder="Notes"
-                      onChange={(e) => setNote(e.target.value)}
+                      id="notess"
+                      name="notess"
+                      placeholder="notess"
+                      onChange={(e) => setnotes(e.target.value)}
                     />
                   )}
                 </div>
