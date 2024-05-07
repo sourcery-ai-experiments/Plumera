@@ -55,6 +55,9 @@ export const deleteClient = async (clientId: string): Promise<any> => {
 export const fetchClientDetails = async (): Promise<any> => {
   try {
     const response = await api.get('billing/customer')
+    // const { data } = await api.get('billing/connect-to-google')
+    // console.log('data gooogle')
+    // console.log(data)
     return response.data.map((client: Client) => convertKeysToSnakeCase(client))
   } catch (error: unknown) {
     console.error('Failed to fetch client details:', error)

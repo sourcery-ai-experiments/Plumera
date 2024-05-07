@@ -123,6 +123,7 @@ export default class ScrappersController {
           last_name:
             data.formality.content.personnePhysique.identite.entrepreneur.descriptionPersonne.nom,
           email: '',
+          sirenNumber: siren_number,
           phone: '',
           address: `${data.formality.content.personnePhysique.adresseEntreprise.adresse.numVoie} ${fullTypeVoie} ${data.formality.content.personnePhysique.adresseEntreprise.adresse.voie}`,
           city: data.formality.content.personnePhysique.adresseEntreprise.adresse.commune,
