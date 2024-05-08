@@ -45,6 +45,7 @@ function CustomerModal({
       setClient({ ...initialData })
     } else {
       setClient({
+        siren_number: '',
         first_name: '',
         last_name: '',
         email: '',
@@ -122,6 +123,7 @@ function CustomerModal({
                 <form onSubmit={handleSubmit} className="mt-2">
                   <div className="mt-4 grid grid-cols-2 gap-4">
                     {[
+                      { label: 'Siren', name: 'siren_number' },
                       { label: 'Prénom', name: 'first_name' },
                       { label: 'Nom', name: 'last_name' },
                       { label: 'Email', name: 'email', type: 'email' },
@@ -132,7 +134,7 @@ function CustomerModal({
                       { label: 'Code Postal', name: 'zip' },
                       { label: 'Pays', name: 'country' },
                       { label: 'Société', name: 'company' },
-                      { label: 'Numéro de TVA', name: 'vat_number' },
+                      // { label: 'Numéro de TVA', name: 'vat_number' },
                       { label: 'Devise', name: 'currency' },
                       { label: 'Langue', name: 'language' },
                     ].map(({ label, name, type = 'text' }, index) => (

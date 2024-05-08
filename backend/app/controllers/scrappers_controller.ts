@@ -1,7 +1,8 @@
+import { HttpContext } from '@adonisjs/core/http'
 import axios from 'axios'
+import PublicBusinessData from '#models/public_business_data'
 import env from '#start/env'
 import { HttpContext } from '@adonisjs/core/http'
-import PublicBusinessData from '#models/public_business_data'
 
 interface TypeVoieDictionary {
   [key: string]: string
@@ -130,6 +131,7 @@ export default class ScrappersController {
           last_name:
             data.formality.content.personnePhysique.identite.entrepreneur.descriptionPersonne.nom,
           email: '',
+          sirenNumber: siren_number,
           phone: '',
           address: `${data.formality.content.personnePhysique.adresseEntreprise.adresse.numVoie} ${fullTypeVoie} ${data.formality.content.personnePhysique.adresseEntreprise.adresse.voie}`,
           city: data.formality.content.personnePhysique.adresseEntreprise.adresse.commune,
